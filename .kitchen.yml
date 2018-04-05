@@ -39,4 +39,4 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[clickhouse::default]
+      - recipe[clickhouse::server]
