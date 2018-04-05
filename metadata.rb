@@ -8,3 +8,8 @@ issues_url 'https://github.com/ernestas-poskus/chef-clickhouse/issues'
 source_url 'https://github.com/ernestas-poskus/chef-clickhouse'
 version '0.1.0'
 chef_version '>= 12.1' if respond_to?(:chef_version)
+
+supports 'redhat'
+supports 'centos'
+supports 'ubuntu'
+supports 'debian'
