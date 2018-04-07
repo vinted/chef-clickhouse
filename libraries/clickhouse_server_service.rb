@@ -168,10 +168,21 @@ class Chef
         end
       end
 
+      def package_name
+        if debian_family?
+          'clickhouse-server-base'
+        else
+          'clickhouse-server'
+        end
+      end
+
       # rubocop:disable Metrics/MethodLength
       def install_clickhouse_server_package
-        version = [new_resource.version, new_resource.package_release].join('-')
-        package 'clickhouse-server' do
+        version = [
+          new_resource.version,
+          new_resource.package_release
+        ].compact.join('-')
+        package package_name do
           flush_cache %i[before] if rhel_family?
           version version
         end

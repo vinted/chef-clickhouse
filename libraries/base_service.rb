@@ -49,6 +49,10 @@ class Chef
         %w[rhel centos].include?(node['platform'])
       end
 
+      def debian_family?
+        %w[debian ubuntu].include?(node['platform'])
+      end
+
       protected
 
       def deriver_install
