@@ -1,4 +1,4 @@
-# chef-clickhouse
+# chef-clickhouse (in development)
 
 [![Build Status](https://travis-ci.org/ernestas-poskus/chef-clickhouse.svg?branch=master)](https://travis-ci.org/ernestas-poskus/chef-clickhouse)
 [![Cookbook Version](https://img.shields.io/cookbook/v/clickhouse.svg)](https://supermarket.chef.io/cookbooks/clickhouse)
