@@ -68,7 +68,7 @@ default['clickhouse']['server']['config']['query_log']['partition_by'] = 'toYYYY
 default['clickhouse']['server']['config']['query_log']['flush_interval_milliseconds'] = 7500
 
 
-default['clickhouse']['server']['config']['part_log']['enable'] = true # TODO: while test
+default['clickhouse']['server']['config']['part_log']['enable'] = false
 default['clickhouse']['server']['config']['part_log']['database'] = 'system'
 default['clickhouse']['server']['config']['part_log']['table'] = 'part_log'
 default['clickhouse']['server']['config']['part_log']['flush_interval_milliseconds'] = 7500
