@@ -5,10 +5,10 @@
         <!-- Default settings. -->
         <default>
             <!-- Maximum memory usage for processing single query, in bytes. -->
-            <max_memory_usage>10000000000</max_memory_usage>
+            <max_memory_usage><%= @users['profiles']['default']['max_memory_usage'] %></max_memory_usage>
 
             <!-- Use cache of uncompressed blocks of data. Meaningful only for processing many of very short queries. -->
-            <use_uncompressed_cache>0</use_uncompressed_cache>
+            <use_uncompressed_cache><%= @users['profiles']['default']['use_uncompressed_cache'] %></use_uncompressed_cache>
 
             <!-- How to choose between replicas during distributed query processing.
                  random - choose random replica from set of replicas with minimum number of errors
@@ -17,12 +17,12 @@
                   (Hamming distance).
                  in_order - first live replica is choosen in specified order.
             -->
-            <load_balancing>random</load_balancing>
+            <load_balancing><%= @users['profiles']['default']['load_balancing'] %></load_balancing>
         </default>
 
         <!-- Profile that allows only read queries. -->
         <readonly>
-            <readonly>1</readonly>
+            <readonly><%= @users['profiles']['readonly']['readonly'] %></readonly>
         </readonly>
     </profiles>
 
@@ -43,7 +43,7 @@
                  Execute: PASSWORD=$(base64 < /dev/urandom | head -c8); echo "$PASSWORD"; echo -n "$PASSWORD" | sha256sum | tr -d '-'
                  In first line will be password and in second - corresponding SHA256.
             -->
-            <password></password>
+            <password><%= @users['users']['default']['password'] %></password>
 
             <!-- List of networks with open access.
 
@@ -64,26 +64,29 @@
                      Strongly recommended that regexp is ends with $
                  All results of DNS requests are cached till server restart.
             -->
-            <networks incl="networks" replace="replace">
-                <ip>::/0</ip>
+            <networks incl="<%= @users['users']['default']['networks']['incl'] %>" replace="<%= @users['users']['default']['networks']['replace'] %>">
+              <% @users['users']['default']['networks']['ip'].each do |ip| %>
+                <ip><%= ip %></ip>
+              <% end %>
             </networks>
 
             <!-- Settings profile for user. -->
-            <profile>default</profile>
+            <profile><%= @users['users']['default']['profile'] %></profile>
 
             <!-- Quota for user. -->
-            <quota>default</quota>
+            <quota><%= @users['users']['default']['quota'] %></quota>
         </default>
 
         <!-- Example of user with readonly access. -->
         <readonly>
-            <password></password>
-            <networks incl="networks" replace="replace">
-                <ip>::1</ip>
-                <ip>127.0.0.1</ip>
+            <password><%= @users['users']['readonly']['password'] %></password>
+            <networks incl="<%= @users['users']['readonly']['networks']['incl'] %>" replace="<%= @users['users']['readonly']['networks']['replace'] %>">
+              <% @users['users']['readonly']['networks']['ip'].each do |ip| %>
+                <ip><%= ip %></ip>
+              <% end %>
             </networks>
-            <profile>readonly</profile>
-            <quota>default</quota>
+            <profile><%= @users['users']['readonly']['profile'] %></profile>
+            <quota><%= @users['users']['readonly']['quota'] %></quota>
         </readonly>
     </users>
 
@@ -94,14 +97,14 @@
             <!-- Limits for time interval. You could specify many intervals with different limits. -->
             <interval>
                 <!-- Length of interval. -->
-                <duration>3600</duration>
+                <duration><%= @users['quotas']['default']['interval']['duration'] %></duration>
 
                 <!-- No limits. Just calculate resource usage for time interval. -->
-                <queries>0</queries>
-                <errors>0</errors>
-                <result_rows>0</result_rows>
-                <read_rows>0</read_rows>
-                <execution_time>0</execution_time>
+                <queries><%= @users['quotas']['default']['interval']['queries'] %></queries>
+                <errors><%= @users['quotas']['default']['interval']['errors'] %></errors>
+                <result_rows><%= @users['quotas']['default']['interval']['result_rows'] %></result_rows>
+                <read_rows><%= @users['quotas']['default']['interval']['read_rows'] %></read_rows>
+                <execution_time><%= @users['quotas']['default']['interval']['execution_time'] %></execution_time>
             </interval>
         </default>
     </quotas>

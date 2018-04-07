@@ -61,7 +61,7 @@ server_attributes = StringIO.new
 server_attributes.write "# Auto generated from: #{file}'"
 
 tmp_hash.each do |k, v|
-  v = v.strip
+  v = v.to_s.strip
   next if v.empty?
   config_key = map_as_attr(k)
   config_value = parse_value(v)

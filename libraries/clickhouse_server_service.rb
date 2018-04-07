@@ -32,6 +32,11 @@ class Chef
         kind_of: [Hash, Chef::Node::ImmutableMash],
         default: lazy { node['clickhouse']['server']['config'] }
       )
+      attribute(
+        :users,
+        kind_of: [Hash, Chef::Node::ImmutableMash],
+        default: lazy { node['clickhouse']['server']['users'] }
+      )
       attribute(:config_dir, kind_of: String, default: '/etc/clickhouse-server')
 
       # Service
@@ -141,6 +146,7 @@ class Chef
           group new_resource.group
           cookbook node['clickhouse']['server']['users']['cookbook']
           mode '0640'
+          variables users: new_resource.users
         end
       end
 
@@ -190,7 +196,6 @@ class Chef
         end
       end
 
-      # rubocop:disable Metrics/MethodLength
       def install_clickhouse_server_package
         version = [
           new_resource.version,
