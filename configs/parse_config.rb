@@ -55,17 +55,18 @@ end
 DEFAULT_PREFIX = "default['clickhouse']['server']['config']"
 CONFIG_PREFIX = "node['clickhouse']['server']['config']"
 
-puts hash
+# puts hash
 
-# server_attributes = StringIO.new
-# server_attributes.write "# Auto generated from: #{file}'"
-#
-# tmp_hash.each do |k, v|
-#   v = v.strip
-#   next if v.empty?
-#   config_key = map_as_attr(k)
-#   config_value = parse_value(v)
-#   server_attributes.write("\n#{DEFAULT_PREFIX}#{config_key} = #{config_value}")
-# end
-#
+server_attributes = StringIO.new
+server_attributes.write "# Auto generated from: #{file}'"
+
+tmp_hash.each do |k, v|
+  v = v.strip
+  next if v.empty?
+  config_key = map_as_attr(k)
+  config_value = parse_value(v)
+  server_attributes.write("\n#{DEFAULT_PREFIX}#{config_key} = #{config_value}")
+end
+
 # IO.write(File.join(Dir.pwd, '..', 'attributes/server.rb'), server_attributes.string)
+puts server_attributes.string
