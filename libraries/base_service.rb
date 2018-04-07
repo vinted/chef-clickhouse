@@ -106,6 +106,7 @@ class Chef
       end
 
       # rubocop:disable Metrics/LineLength
+      # rubocop:disable Metrics/MethodLength
       def install_clickhouse_repository
         case node['platform']
         when 'rhel', 'centos'
@@ -113,8 +114,14 @@ class Chef
             creates '/etc/yum.repos.d/Altinity_clickhouse.repo'
           end
         when 'ubuntu', 'debian'
+          execute 'apt_update_for_chef_clickhouse' do
+            command %(apt-get update)
+            action :nothing
+          end
+
           execute 'curl -s https://packagecloud.io/install/repositories/Altinity/clickhouse/script.deb.sh | sudo bash' do
             creates '/etc/apt/sources.list.d/Altinity_clickhouse.list'
+            notifies :run, 'execute[apt_update_for_chef_clickhouse]', :immediate
           end
         end
       end
