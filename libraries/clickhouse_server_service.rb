@@ -70,6 +70,7 @@ class Chef
 
       protected
 
+      # rubocop:disable Metrics/MethodLength
       def deriver_install
         install_clickhouse_server_package
         create_directories(
@@ -81,7 +82,8 @@ class Chef
           format_schema_path
         )
         install_config
-        # install_service
+        install_users
+        install_service
       end
 
       private
@@ -127,10 +129,19 @@ class Chef
 
       def service_args
         @service_args ||= %W[
-          --daemon
           --pid-file=#{pid_file_path}
           --config-file=#{config_file_path}
         ].join(' ')
+      end
+
+      def install_users
+        template users_file_path do
+          source 'users.xml.erb'
+          user new_resource.user
+          group new_resource.group
+          cookbook node['clickhouse']['server']['users']['cookbook']
+          mode '0640'
+        end
       end
 
       def data_path
@@ -145,9 +156,12 @@ class Chef
         ::File.join(data_path, '/format_schemas')
       end
 
-      # TODO: consider versioned config.xml-#{version}
       def config_file_path
         ::File.join(service_config_path, 'config.xml')
+      end
+
+      def users_file_path
+        ::File.join(service_config_path, new_resource.config['users_config'])
       end
 
       def pid_file_path
