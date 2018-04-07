@@ -172,7 +172,7 @@ class Chef
       def install_clickhouse_server_package
         version = [new_resource.version, new_resource.package_release].join('-')
         package 'clickhouse-server' do
-          flush_cache %i[before]
+          flush_cache %i[before] if rhel_family?
           version version
         end
 

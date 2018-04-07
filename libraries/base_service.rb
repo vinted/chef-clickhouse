@@ -45,6 +45,10 @@ class Chef
         raise 'Not implemented: action_delete'
       end
 
+      def rhel_family?
+        %w[rhel centos].include?(node['platform'])
+      end
+
       protected
 
       def deriver_install
