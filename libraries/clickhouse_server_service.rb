@@ -65,7 +65,7 @@ class Chef
       provides(:clickhouse_server_service)
 
       def action_delete
-        service constructed_service_name do
+        service new_resource.service_name do
           action %i[stop disable]
         end
         file config_file_path do
@@ -96,7 +96,7 @@ class Chef
       def service_config_path
         @service_config_path ||= ::File.join(
           new_resource.config_dir,
-          constructed_service_name
+          new_resource.service_name
         )
       end
 
@@ -151,7 +151,7 @@ class Chef
       end
 
       def data_path
-        ::File.join('/var/lib', constructed_service_name)
+        ::File.join('/var/lib', new_resource.service_name)
       end
 
       def temp_data_path
@@ -171,16 +171,16 @@ class Chef
       end
 
       def pid_file_path
-        "/var/run/#{constructed_service_name}.pid"
+        "/var/run/#{new_resource.service_name}.pid"
       end
 
       def log_path
-        "/var/log/#{constructed_service_name}"
+        "/var/log/#{new_resource.service_name}"
       end
 
       def install_service
         command = "#{new_resource.server_bin} #{service_args}"
-        poise_service constructed_service_name do
+        poise_service new_resource.service_name do
           provider new_resource.service_provider
           command command
           user new_resource.user
@@ -217,13 +217,6 @@ class Chef
             action :delete
           end
         end
-      end
-
-      def constructed_service_name
-        @constructed_service_name ||= [
-          new_resource.service_name,
-          new_resource.name
-        ].compact.reject(&:empty?).join('-')
       end
     end
   end
