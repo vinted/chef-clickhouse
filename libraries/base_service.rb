@@ -56,7 +56,11 @@ class Chef
       protected
 
       def deriver_install
-        raise 'Not implemented: deriver_install'
+        raise_error_msg 'Not implemented: deriver_install'
+      end
+
+      def raise_error_msg(m)
+        raise "Clickhouse #{self.class.name} #{new_resource.name}: #{m}"
       end
 
       def validate!
@@ -66,12 +70,12 @@ class Chef
 
       def cpu_sse4_flag_present?
         return if node['cpu']['0']['flags'].include?('sse4_2')
-        raise 'SSE4 CPU flag is not supported'
+        raise_error_msg 'SSE4 CPU flag is not supported'
       end
 
       def platform_supported?
         return if %w[redhat centos debian ubuntu].include?(node['platform'])
-        raise "Platform #{node['platform']} is not supported"
+        raise_error_msg "Platform #{node['platform']} is not supported"
       end
 
       def create_directories(*dirs)
