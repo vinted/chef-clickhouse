@@ -29,7 +29,7 @@ class Chef
       include Poise
 
       def action_install
-        converge_by("Installing ClickHouse #{new_resource.name}") do
+        converge_by("Installing ClickHouse: #{new_resource.name}") do
           notifying_block do
             validate!
             create_user
