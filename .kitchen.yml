@@ -33,4 +33,6 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[clickhouse::server]
+      - recipe[test-clickhouse::setup]
+      - recipe[test-clickhouse::test_clickhouse_server]
+      - recipe[test-clickhouse::test_zookeeper_config]
