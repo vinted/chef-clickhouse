@@ -20,6 +20,7 @@ class Chef
         kind_of: String,
         default: lazy { node['clickhouse']['group'] }
       )
+      attribute(:config_dir, kind_of: String, default: '/etc/clickhouse-server')
     end
   end
 

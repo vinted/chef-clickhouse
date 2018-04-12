@@ -8,7 +8,6 @@ class Chef
 
       # Service
       attribute(:service_name, kind_of: String, default: 'clickhouse-server')
-      attribute(:config_dir, kind_of: String, default: '/etc/clickhouse-server')
       attribute(
         :config_name,
         kind_of: String,
