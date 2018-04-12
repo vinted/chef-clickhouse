@@ -51,7 +51,6 @@ default['clickhouse']['server']['config']['remote_servers']['test_shard_localhos
 default['clickhouse']['server']['config']['zookeeper']['incl'] = 'zookeeper-servers'
 default['clickhouse']['server']['config']['zookeeper']['optional'] = true
 
-# TODO: includes
 default['clickhouse']['server']['config']['macros']['incl'] = 'macros'
 default['clickhouse']['server']['config']['macros']['optional'] = true
 

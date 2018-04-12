@@ -36,3 +36,4 @@ suites:
       - recipe[test-clickhouse::setup]
       - recipe[test-clickhouse::test_clickhouse_server]
       - recipe[test-clickhouse::test_zookeeper_config]
+      - recipe[test-clickhouse::test_macros_config]
