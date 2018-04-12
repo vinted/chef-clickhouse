@@ -1,4 +1,4 @@
-require_relative 'base_service'
+require_relative 'clickhouse_base'
 
 class Chef
   class Resource
