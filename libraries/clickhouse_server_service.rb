@@ -37,7 +37,6 @@ class Chef
         kind_of: [Hash, Chef::Node::ImmutableMash],
         default: lazy { node['clickhouse']['server']['users'] }
       )
-      attribute(:config_dir, kind_of: String, default: '/etc/clickhouse-server')
 
       # Service
       attribute(:service_name, kind_of: String, default: 'clickhouse-server')
