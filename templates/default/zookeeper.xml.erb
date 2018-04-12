@@ -1,0 +1,10 @@
+<yandex>
+    <zookeeper>
+        <% @nodes.each_with_index do |node, index| %>
+          <node index="<%= node[:index] || index %>">
+              <host><%= node[:host] %></host>
+              <port><%= node[:port] %></port>
+          </node>
+        <% end %>
+    </zookeeper>
+</yandex>

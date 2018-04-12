@@ -15,3 +15,7 @@ default['clickhouse']['server']['configuration']['cookbook'] = 'clickhouse'
 # Override users.xml Chef template resource `cookbook` location.
 # Useful in wrapping cookbooks.
 default['clickhouse']['server']['users']['cookbook'] = 'clickhouse'
+
+# Override zookeeper-servers.xml Chef template resource `cookbook` location.
+# Useful in wrapping cookbooks.
+default['clickhouse']['server']['zookeeper']['cookbook'] = 'clickhouse'

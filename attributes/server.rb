@@ -43,20 +43,17 @@ default['clickhouse']['server']['config']['default_database'] = 'default'
 # Example: W-SU is an alias for Europe/Moscow and Zulu is an alias for UTC.
 default['clickhouse']['server']['config']['timezone'] = 'Zulu'
 
-
 # TODO: includes
 default['clickhouse']['server']['config']['remote_servers']['incl'] = 'clickhouse_remote_servers'
 default['clickhouse']['server']['config']['remote_servers']['test_shard_localhost']['shard']['replica']['host'] = 'localhost'
 default['clickhouse']['server']['config']['remote_servers']['test_shard_localhost']['shard']['replica']['port'] = 9000
 
-# TODO: includes
 default['clickhouse']['server']['config']['zookeeper']['incl'] = 'zookeeper-servers'
 default['clickhouse']['server']['config']['zookeeper']['optional'] = true
 
 # TODO: includes
 default['clickhouse']['server']['config']['macros']['incl'] = 'macros'
 default['clickhouse']['server']['config']['macros']['optional'] = true
-
 
 default['clickhouse']['server']['config']['builtin_dictionaries_reload_interval'] = 3600
 default['clickhouse']['server']['config']['max_session_timeout'] = 3600
