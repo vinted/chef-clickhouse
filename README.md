@@ -124,6 +124,8 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `service_provider` - accepts symbol and controls service file flavor, for `poise_service`, defaults to: `:systemd` or `sysvinit` depending on availability
 - `config_template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['configuration']['cookbook']`
 - `users_template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['users']['cookbook']`
+- `config_template_source` - template cookbook source, defaults to `config.xml.erb`
+- `users_template_source` - template cookbook source, defaults to `users.xml.erb`
 
 ##### Actions
 
@@ -156,6 +158,7 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `config_name` - defaults to `node['clickhouse']['server']['config']['macros']['incl']`
 - `config` - whatever is passed here is reflected in 'macros.xml'
 - `template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['macros']['cookbook']`
+- `template_source` - template cookbook source, defaults to `macros.xml.erb`
 
 ##### Actions
 
@@ -190,6 +193,7 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `config_name` - defaults to `node['clickhouse']['server']['config']['macros']['incl']`
 - `nodes` - expects Array of Hash 'es, e.g.: `[{index: 1, host: 'localhost', port: 2181}]`
 - `template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['zookeeper']['cookbook']`
+- `template_source` - template cookbook source, defaults to `zookeeper.xml.erb`
 
 ##### Actions
 
@@ -221,7 +225,8 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `service_name` - defaults to `clickhouse-server`
 - `config_name` - defaults to `node['clickhouse']['server']['config']['macros']['incl']`
 - `config` - whatever is passed here is reflected in 'clickhouse_remote_servers.xml'
-- `template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['remote_servers']['cookbook']`
+- `template_cookbook` - template cookbook, defaults to `node['clickhouse']['server']['remote_servers']['cookbook']`
+- `template_source` - template cookbook source, defaults to `remote_servers.xml.erb`
 
 ##### Actions
 

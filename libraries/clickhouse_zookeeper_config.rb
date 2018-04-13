@@ -27,6 +27,7 @@ class Chef
           node['clickhouse']['server']['zookeeper']['cookbook']
         end
       )
+      attribute(:template_source, kind_of: String, default: 'zookeeper.xml.erb')
     end
   end
 
@@ -65,7 +66,7 @@ class Chef
       # rubocop:disable Metrics/AbcSize
       def deriver_install
         template zookeeper_config_path do
-          source 'zookeeper.xml.erb'
+          source new_resource.template_source
           user new_resource.user
           group new_resource.group
           cookbook new_resource.template_cookbook

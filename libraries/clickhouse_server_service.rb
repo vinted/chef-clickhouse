@@ -70,6 +70,8 @@ class Chef
           node['clickhouse']['server']['users']['cookbook']
         end
       )
+      attribute(:config_template_source, kind_of: String, default: 'config.xml.erb')
+      attribute(:users_template_source, kind_of: String, default: 'users.xml.erb')
     end
   end
 
@@ -121,7 +123,7 @@ class Chef
       def install_config
         variables = template_config
         template config_file_path do
-          source 'config.xml.erb'
+          source new_resource.config_template_source
           user new_resource.user
           group new_resource.group
           cookbook new_resource.config_template_cookbook
@@ -156,7 +158,7 @@ class Chef
 
       def install_users
         template users_file_path do
-          source 'users.xml.erb'
+          source new_resource.users_template_source
           user new_resource.user
           group new_resource.group
           cookbook new_resource.users_template_cookbook

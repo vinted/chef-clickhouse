@@ -25,6 +25,7 @@ class Chef
           node['clickhouse']['server']['macros']['cookbook']
         end
       )
+      attribute(:template_source, kind_of: String, default: 'macros.xml.erb')
     end
   end
 
@@ -54,7 +55,7 @@ class Chef
       # rubocop:disable Metrics/AbcSize
       def deriver_install
         template macros_config_path do
-          source 'macros.xml.erb'
+          source new_resource.template_source
           user new_resource.user
           group new_resource.group
           cookbook new_resource.template_cookbook
