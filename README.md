@@ -233,6 +233,40 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `:create` - Installs clickhouse_remote_servers.xml configuration file
 - `:delete` - Removes clickhouse_remote_servers.xml configuration file
 
+### clickhouse_custom_config
+
+The `clickhouse_custom_config` resource manages ClickHouse server custom xml or any other file configuration for ClickHouse server.
+
+The `:create` action macros file installation.
+
+##### Example
+
+```ruby
+clickhouse_custom_config 'custom instance' do
+  service_name 'clickhouse-server-your-service'
+  config 'your value'
+  config_name 'test-custom.xml'
+end
+```
+
+Please note that when using `notifies` or `subscribes`, the resource to reference is `clickhouse_custom_config[custom instance]`, not `service[custom instance]`.
+
+##### Parameters
+
+- `user` - operating system user to run ClickHouse
+- `group` - operating system group to run ClickHouse
+- `config_dir` - configuration namespace directory, default is /etc/clickhouse-server/{custom instance}
+- `service_name` - defaults to `clickhouse-server`
+- `config_name` - defaults to `custom.xml`
+- `config` - whatever is passed here is reflected in 'custom.xml' or whatever what is provided in `config_name`
+- `template_cookbook` - template cookbook, defaults to `clickhouse`
+- `template_source` - template cookbook source, defaults to `custom.xml.erb`
+
+##### Actions
+
+- `:create` - Installs custom.xml configuration file
+- `:delete` - Removes custom.xml configuration file
+
 ## Manual tuning
 
 CPU frequency tunning
