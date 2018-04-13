@@ -141,15 +141,6 @@
          https://clickhouse.yandex/reference_en.html#Distributed
       -->
     <remote_servers incl="clickhouse_remote_servers" >
-        <!-- Test only shard config for testing distributed storage -->
-        <test_shard_localhost>
-            <shard>
-                <replica>
-                    <host>localhost</host>
-                    <port>9000</port>
-                </replica>
-            </shard>
-        </test_shard_localhost>
     </remote_servers>
 
 
@@ -192,7 +183,6 @@
         events - send data from table system.events
         asynchronous_metrics - send data from table system.asynchronous_metrics
     -->
-    <!-- # TODO: includes -->
     <!--
     <graphite>
         <host>localhost</host>
@@ -268,7 +258,6 @@
     -->
     <dictionaries_config><%= @config['dictionaries_config'] %></dictionaries_config>
 
-    <!-- # TODO: includes -->
     <!-- Uncomment if you want data to be compressed 30-100% better.
          Don't do that if you just started using ClickHouse.
       -->
@@ -287,7 +276,6 @@
     -->
     </compression>
 
-    <!-- # TODO: includes -->
     <!-- Allow to execute distributed DDL queries (CREATE, DROP, ALTER, RENAME) on cluster.
          Works only if ZooKeeper is enabled. Comment it if such functionality isn't required. -->
     <distributed_ddl>
@@ -298,7 +286,6 @@
         <!-- <profile>default</profile> -->
     </distributed_ddl>
 
-    <!-- # TODO: includes -->
     <!-- Settings to fine tune MergeTree tables. See documentation in source code, in MergeTreeSettings.h -->
     <!--
     <merge_tree>
@@ -314,7 +301,6 @@
     -->
     <!-- <max_table_size_to_drop>0</max_table_size_to_drop> -->
 
-    <!-- # TODO: includes -->
     <!-- Example of parameters for GraphiteMergeTree table engine -->
     <graphite_rollup_example>
         <pattern>
