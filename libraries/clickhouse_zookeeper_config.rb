@@ -45,6 +45,10 @@ class Chef
 
       def validate!
         super
+        check_if_dir_exist?(
+          service_config_path,
+          'check if `service_name` attribute is set and valid'
+        )
         nodes = new_resource.nodes
         raise_error_msg "`nodes` attribute can't be empty" if nodes.empty?
         unless nodes.is_a?(Array)
