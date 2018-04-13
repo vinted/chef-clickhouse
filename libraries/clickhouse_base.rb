@@ -89,6 +89,11 @@ class Chef
         end
       end
 
+      def check_if_dir_exist?(dir, msg)
+        return if Dir.exist?(dir)
+        raise_error_msg "directory #{dir} does not exist, #{msg}"
+      end
+
       private
 
       def manage_ulimit
