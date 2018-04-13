@@ -1,9 +1,9 @@
 <yandex>
     <zookeeper>
-        <% @nodes.each_with_index do |node, index| %>
-          <node index="<%= node[:index] || index %>">
-              <host><%= node[:host] %></host>
-              <port><%= node[:port] %></port>
+        <% @nodes.each_with_index do |no, i| %>
+          <node index="<%= no[:index] || i %>">
+              <host><%= no[:host] %></host>
+              <port><%= no[:port] %></port>
           </node>
         <% end %>
     </zookeeper>
