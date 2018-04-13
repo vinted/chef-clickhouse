@@ -54,6 +54,22 @@ class Chef
           end
         end
       )
+
+      attribute(
+        :config_template_cookbook,
+        kind_of: String,
+        default: lazy do
+          node['clickhouse']['server']['configuration']['cookbook']
+        end
+      )
+
+      attribute(
+        :users_template_cookbook,
+        kind_of: String,
+        default: lazy do
+          node['clickhouse']['server']['users']['cookbook']
+        end
+      )
     end
   end
 
@@ -108,7 +124,7 @@ class Chef
           source 'config.xml.erb'
           user new_resource.user
           group new_resource.group
-          cookbook node['clickhouse']['server']['configuration']['cookbook']
+          cookbook new_resource.config_template_cookbook
           mode '0640'
           variables variables
           # For releases of the chef-client prior to 12.5
@@ -143,7 +159,7 @@ class Chef
           source 'users.xml.erb'
           user new_resource.user
           group new_resource.group
-          cookbook node['clickhouse']['server']['users']['cookbook']
+          cookbook new_resource.users_template_cookbook
           mode '0640'
           variables users: new_resource.users
         end
