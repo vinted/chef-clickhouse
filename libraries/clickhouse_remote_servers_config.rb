@@ -17,6 +17,14 @@ class Chef
       )
       # Whatever format
       attribute(:config)
+
+      attribute(
+        :template_cookbook,
+        kind_of: String,
+        default: lazy do
+          node['clickhouse']['server']['remote_servers']['cookbook']
+        end
+      )
     end
   end
 
@@ -45,7 +53,7 @@ class Chef
           source 'remote_servers.xml.erb'
           user new_resource.user
           group new_resource.group
-          cookbook node['clickhouse']['server']['remote_servers']['cookbook']
+          cookbook new_resource.template_cookbook
           mode '0640'
           variables config: new_resource.config
         end

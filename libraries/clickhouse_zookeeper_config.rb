@@ -19,6 +19,14 @@ class Chef
       # [{index: 1, host: 'localhost', port: 2181}]
       # index: key is optional
       attribute(:nodes, kind_of: Array, default: [])
+
+      attribute(
+        :template_cookbook,
+        kind_of: String,
+        default: lazy do
+          node['clickhouse']['server']['zookeeper']['cookbook']
+        end
+      )
     end
   end
 
@@ -56,7 +64,7 @@ class Chef
           source 'zookeeper.xml.erb'
           user new_resource.user
           group new_resource.group
-          cookbook node['clickhouse']['server']['zookeeper']['cookbook']
+          cookbook new_resource.template_cookbook
           mode '0640'
           variables nodes: new_resource.nodes
         end

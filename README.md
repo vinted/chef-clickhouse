@@ -122,6 +122,8 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `users` - given configuration of `config.xml`, `users.xml` include, default is `node['clickhouse']['server']['users']`
 - `service_name` - defaults to `clickhouse-server`
 - `service_provider` - accepts symbol and controls service file flavor, for `poise_service`, defaults to: `:systemd` or `sysvinit` depending on availability
+- `config_template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['configuration']['cookbook']`
+- `users_template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['users']['cookbook']`
 
 ##### Actions
 
@@ -153,6 +155,7 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `service_name` - defaults to `clickhouse-server`
 - `config_name` - defaults to `node['clickhouse']['server']['config']['macros']['incl']`
 - `config` - whatever is passed here is reflected in 'macros.xml'
+- `template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['macros']['cookbook']`
 
 ##### Actions
 
@@ -186,6 +189,7 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `service_name` - defaults to `clickhouse-server`
 - `config_name` - defaults to `node['clickhouse']['server']['config']['macros']['incl']`
 - `nodes` - expects Array of Hash 'es, e.g.: `[{index: 1, host: 'localhost', port: 2181}]`
+- `template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['zookeeper']['cookbook']`
 
 ##### Actions
 
@@ -217,6 +221,7 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `service_name` - defaults to `clickhouse-server`
 - `config_name` - defaults to `node['clickhouse']['server']['config']['macros']['incl']`
 - `config` - whatever is passed here is reflected in 'clickhouse_remote_servers.xml'
+- `template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['remote_servers']['cookbook']`
 
 ##### Actions
 
