@@ -48,3 +48,4 @@ suites:
       - recipe[test-clickhouse::test_zookeeper_config]
       - recipe[test-clickhouse::test_macros_config]
       - recipe[test-clickhouse::test_remote_servers_config]
+      - recipe[test-clickhouse::test_custom_config]
