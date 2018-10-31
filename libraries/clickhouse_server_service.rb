@@ -98,10 +98,12 @@ class Chef
         create_directories(
           new_resource.config_dir,
           service_config_path,
+          service_conf_d_path,
           log_path,
           data_path,
           temp_data_path,
-          format_schema_path
+          format_schema_path,
+          user_files_path
         )
         install_config
         install_users
@@ -115,6 +117,10 @@ class Chef
           new_resource.config_dir,
           new_resource.service_name
         )
+      end
+
+      def service_conf_d_path
+        ::File.join(service_config_path, 'conf.d')
       end
 
       # rubocop:disable Metrics/AbcSize
@@ -140,12 +146,14 @@ class Chef
         dp = data_path
         tdp = temp_data_path
         fsp = format_schema_path
+        ufp = user_files_path
         {
           config: new_resource.config,
           log_path: log_path,
           data_path: dp.end_with?('/') ? dp : "#{dp}/",
           temp_data_path: tdp.end_with?('/') ? tdp : "#{tdp}/",
-          format_schema_path: fsp.end_with?('/') ? fsp : "#{fsp}/"
+          format_schema_path: fsp.end_with?('/') ? fsp : "#{fsp}/",
+          user_files_path: ufp.end_with?('/') ? ufp : "#{ufp}/",
         }
       end
 
@@ -169,6 +177,10 @@ class Chef
 
       def data_path
         ::File.join('/var/lib', new_resource.service_name)
+      end
+
+      def user_files_path
+        ::File.join(data_path, 'user_files')
       end
 
       def temp_data_path

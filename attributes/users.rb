@@ -5,7 +5,7 @@ default['clickhouse']['server']['users']['profiles']['default']['load_balancing'
 
 default['clickhouse']['server']['users']['profiles']['readonly']['readonly'] = 1
 
-default['clickhouse']['server']['users']['users']['default']['networks']['incl'] = 'networks'
+# default['clickhouse']['server']['users']['users']['default']['networks']['incl'] = 'networks'
 default['clickhouse']['server']['users']['users']['default']['networks']['replace'] = 'replace'
 default['clickhouse']['server']['users']['users']['default']['networks']['ip'] = %w[
   ::/0
@@ -16,7 +16,7 @@ default['clickhouse']['server']['users']['users']['default']['profile'] = 'defau
 default['clickhouse']['server']['users']['users']['default']['quota'] = 'default'
 
 default['clickhouse']['server']['users']['users']['readonly']['password'] = ''
-default['clickhouse']['server']['users']['users']['readonly']['networks']['incl'] = 'networks'
+# default['clickhouse']['server']['users']['users']['readonly']['networks']['incl'] = 'networks'
 default['clickhouse']['server']['users']['users']['readonly']['networks']['replace'] = 'replace'
 default['clickhouse']['server']['users']['users']['readonly']['networks']['ip'] = %w[
   ::1

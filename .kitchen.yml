@@ -49,3 +49,5 @@ suites:
       - recipe[test-clickhouse::test_macros_config]
       - recipe[test-clickhouse::test_remote_servers_config]
       - recipe[test-clickhouse::test_custom_config]
+      - recipe[test-clickhouse::test_compression_config]
+      - role[throughout_config_xml]

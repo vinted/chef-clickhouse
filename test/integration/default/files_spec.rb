@@ -1,6 +1,9 @@
 %w[
   /etc/clickhouse-server/clickhouse-server-test/config.xml
-  /etc/clickhouse-server/clickhouse-server-test/zookeeper-servers.xml
+  /etc/clickhouse-server/clickhouse-server-test/conf.d/zookeeper.xml
+  /etc/clickhouse-server/clickhouse-server-test/conf.d/remote_servers.xml
+  /etc/clickhouse-server/clickhouse-server-test/conf.d/compression.xml
+  /etc/clickhouse-server/clickhouse-server-test/conf.d/macros.xml
 ].each do |directory|
   describe file(directory) do
     it { should exist }

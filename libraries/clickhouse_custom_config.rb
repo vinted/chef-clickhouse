@@ -30,32 +30,45 @@ class Chef
 
       protected
 
+      def validate_config_attribute!
+        config = new_resource.config
+        raise_error_msg 'config attribute is required' unless config
+      end
+
       def validate!
         super
         check_if_dir_exist?(
           service_config_path,
           'check if `service_name` attribute is set and valid'
         )
-        config = new_resource.config
-        raise_error_msg 'config attribute is required' unless config
+        validate_config_attribute!
+      end
+
+      def variables
+        {
+          config: new_resource.config
+        }
       end
 
       # rubocop:disable Metrics/AbcSize
       def deriver_install
+        vars = variables
         template custom_config_path do
           source new_resource.template_source
           user new_resource.user
           group new_resource.group
           cookbook new_resource.template_cookbook
           mode '0640'
-          variables config: new_resource.config
+          variables vars
         end
       end
 
-      private
-
       def service_config_path
         ::File.join(new_resource.config_dir, new_resource.service_name)
+      end
+
+      def service_conf_d_path
+        ::File.join(service_config_path, 'conf.d')
       end
 
       def custom_config_path

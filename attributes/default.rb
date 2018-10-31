@@ -3,7 +3,7 @@ default['clickhouse']['group'] = 'clickhouse'
 
 case node['platform']
 when 'rhel', 'centos'
-  default['clickhouse']['server']['version'] = '1.1.54362'
+  default['clickhouse']['server']['version'] = '18.14.10'
 when 'ubuntu', 'debian'
   default['clickhouse']['server']['version'] = '1.1.54343'
 end
@@ -24,6 +24,10 @@ default['clickhouse']['server']['zookeeper']['cookbook'] = 'clickhouse'
 # Useful in wrapping cookbooks.
 default['clickhouse']['server']['macros']['cookbook'] = 'clickhouse'
 
-# Override macros.xml Chef template resource `cookbook` location.
+# Override remote_servers.xml Chef template resource `cookbook` location.
 # Useful in wrapping cookbooks.
 default['clickhouse']['server']['remote_servers']['cookbook'] = 'clickhouse'
+
+# Override compression.xml Chef template resource `cookbook` location.
+# Useful in wrapping cookbooks.
+default['clickhouse']['server']['compression']['cookbook'] = 'clickhouse'

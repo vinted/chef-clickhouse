@@ -1,0 +1,26 @@
+{
+  "name": "throughout_config_xml",
+  "override_attributes": {
+    "clickhouse": {
+      "server": {
+        "config": {
+          "logger": {
+            "level": "error",
+            "count": "100",
+            "size": "101M"
+          },
+          "display_name": "kitchen-test",
+          "interserver_http_port": 9019,
+          "listen_backlog": 10,
+          "max_connections": 3000,
+          "keep_alive_timeout": 4,
+          "uncompressed_cache_size": 10101010101,
+          "mark_cache_size": 10101,
+          "builtin_dictionaries_reload_interval": 12,
+          "max_session_timeout": 4999,
+          "default_session_timeout": 41
+        }
+      }
+    }
+  }
+}

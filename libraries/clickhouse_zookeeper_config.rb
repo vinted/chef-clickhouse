@@ -1,55 +1,42 @@
-require_relative 'clickhouse_base'
+require_relative 'clickhouse_custom_config'
 
 class Chef
   class Resource
     # ClickHouse zookeeper configuration
-    class ClickHouseZookeeperConfig < ClickhouseBaseService
+    class ClickHouseZookeeperConfig < ClickHouseCustomConfig
       provides(:clickhouse_zookeeper_config)
 
-      # Service
-      attribute(:service_name, kind_of: String, default: 'clickhouse-server')
-      attribute(
-        :config_name,
-        kind_of: String,
-        default: lazy do
-          node['clickhouse']['server']['config']['zookeeper']['incl']
-        end
-      )
       # Must be array of hashes, e.g.:
       # [{index: 1, host: 'localhost', port: 2181}]
       # index: key is optional
       attribute(:nodes, kind_of: Array, default: [])
 
-      attribute(
-        :template_cookbook,
-        kind_of: String,
-        default: lazy do
-          node['clickhouse']['server']['zookeeper']['cookbook']
-        end
-      )
-      attribute(:template_source, kind_of: String, default: 'zookeeper.xml.erb')
+      def config_name
+        'zookeeper'
+      end
+
+      def template_cookbook
+        node['clickhouse']['server']['zookeeper']['cookbook']
+      end
+
+      def template_source
+        'zookeeper.xml.erb'
+      end
     end
   end
 
   class Provider
     # ClickHouse zookeeper provider
-    class ClickHouseZookeeperConfig < ClickhouseBaseService
+    class ClickHouseZookeeperConfig < ClickHouseCustomConfig
       provides(:clickhouse_zookeeper_config)
-
-      def action_delete
-        file zookeeper_config_path do
-          action :delete
-        end
-      end
 
       protected
 
+      def validate_config_attribute!
+      end
+
       def validate!
         super
-        check_if_dir_exist?(
-          service_config_path,
-          'check if `service_name` attribute is set and valid'
-        )
         nodes = new_resource.nodes
         raise_error_msg "`nodes` attribute can't be empty" if nodes.empty?
         unless nodes.is_a?(Array)
@@ -63,26 +50,14 @@ class Chef
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
-      def deriver_install
-        template zookeeper_config_path do
-          source new_resource.template_source
-          user new_resource.user
-          group new_resource.group
-          cookbook new_resource.template_cookbook
-          mode '0640'
-          variables nodes: new_resource.nodes
-        end
+      def variables
+        {
+          nodes: new_resource.nodes
+        }
       end
 
-      private
-
-      def service_config_path
-        ::File.join(new_resource.config_dir, new_resource.service_name)
-      end
-
-      def zookeeper_config_path
-        ::File.join(service_config_path, "#{new_resource.config_name}.xml")
+      def custom_config_path
+        ::File.join(service_conf_d_path, "#{new_resource.config_name}.xml")
       end
     end
   end
