@@ -64,7 +64,7 @@
                      Strongly recommended that regexp is ends with $
                  All results of DNS requests are cached till server restart.
             -->
-            <networks incl="<%= @users['users']['default']['networks']['incl'] %>" replace="<%= @users['users']['default']['networks']['replace'] %>">
+            <networks>
               <% @users['users']['default']['networks']['ip'].each do |ip| %>
                 <ip><%= ip %></ip>
               <% end %>
@@ -80,7 +80,7 @@
         <!-- Example of user with readonly access. -->
         <readonly>
             <password><%= @users['users']['readonly']['password'] %></password>
-            <networks incl="<%= @users['users']['readonly']['networks']['incl'] %>" replace="<%= @users['users']['readonly']['networks']['replace'] %>">
+            <networks>
               <% @users['users']['readonly']['networks']['ip'].each do |ip| %>
                 <ip><%= ip %></ip>
               <% end %>
