@@ -40,21 +40,9 @@ class Chef
 
       # Service
       attribute(:service_name, kind_of: String, default: 'clickhouse-server')
-      attribute(
-        :service_provider,
-        kind_of: Symbol,
-        default: lazy do
-          init_systemd = Mixlib::ShellOut.new('ps --no-headers -o comm 1')
-          init_systemd.run_command
-          init_systemd.error!
-          if init_systemd.stdout.chomp == 'systemd'
-            :systemd
-          else
-            :sysvinit
-          end
-        end
-      )
-
+      attribute(:service_unit_after, kind_of: Array, default: %w[network.target])
+      attribute(:service_timeout_sec, kind_of: Integer, default: 5)
+      attribute(:service_restart, kind_of: String, default: 'on-failure')
       attribute(
         :config_template_cookbook,
         kind_of: String,
@@ -108,6 +96,14 @@ class Chef
         install_config
         install_users
         install_service
+
+        service new_resource.service_name do
+          supports(
+            status: true,
+            restart: true
+          )
+          action %i[enable start]
+        end
       end
 
       private
@@ -153,7 +149,7 @@ class Chef
           data_path: dp.end_with?('/') ? dp : "#{dp}/",
           temp_data_path: tdp.end_with?('/') ? tdp : "#{tdp}/",
           format_schema_path: fsp.end_with?('/') ? fsp : "#{fsp}/",
-          user_files_path: ufp.end_with?('/') ? ufp : "#{ufp}/",
+          user_files_path: ufp.end_with?('/') ? ufp : "#{ufp}/"
         }
       end
 
@@ -208,12 +204,27 @@ class Chef
       end
 
       def install_service
-        command = "#{new_resource.server_bin} #{service_args}"
-        poise_service new_resource.service_name do
-          provider new_resource.service_provider
-          command command
-          user new_resource.user
-          stop_signal 'TERM'
+        exec_start = "#{new_resource.server_bin} #{service_args}"
+
+        systemd_service new_resource.service_name do
+          unit do
+            description 'Chef managed ClickHouse service'
+            after Array(new_resource.service_unit_after).join(' ')
+          end
+
+          install do
+            wanted_by 'multi-user.target'
+          end
+
+          service do
+            type 'simple'
+            exec_start exec_start
+            restart new_resource.service_restart
+            timeout_sec new_resource.service_timeout_sec
+            user new_resource.user
+            group new_resource.group
+            kill_signal 'TERM'
+          end
         end
       end
 

@@ -15,5 +15,5 @@ supports 'ubuntu'
 supports 'debian'
 
 depends 'poise', '~> 2.8.2'
-depends 'poise-service', '~> 1.5.2'
 depends 'ulimit', '~> 1.0.0'
+depends 'systemd', '~> 3.2.4'

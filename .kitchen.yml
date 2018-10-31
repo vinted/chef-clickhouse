@@ -29,16 +29,6 @@ platforms:
       image: ernestasposkus/ubuntu1604
       run_command: '/lib/systemd/systemd'
       run_options: '--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'
-  - name: centos-6
-    driver_plugin: docker
-    driver:
-      image: ernestasposkus/centos6
-      run_command: '/sbin/init'
-      run_options: ''
-  - name: ubuntu-1404
-    driver_plugin: docker
-    driver:
-      image: ernestasposkus/ubuntu1404
 
 suites:
   - name: default

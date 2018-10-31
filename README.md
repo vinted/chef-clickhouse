@@ -120,7 +120,9 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `config` - given configuration of `config.xml`, default is `node['clickhouse']['server']['config']`
 - `users` - given configuration of `config.xml`, `users.xml` include, default is `node['clickhouse']['server']['users']`
 - `service_name` - defaults to `clickhouse-server`
-- `service_provider` - accepts symbol and controls service file flavor, for `poise_service`, defaults to: `:systemd` or `sysvinit` depending on availability
+- `service_unit_after` - systemd start unit after, default is 'network.target'
+- `service_timeout_sec` - systemd timeout sec, default is 5
+- `service_restart` - systemd restart, default 'on-failure'
 - `config_template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['configuration']['cookbook']`
 - `users_template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['users']['cookbook']`
 - `config_template_source` - template cookbook source, defaults to `config.xml.erb`

@@ -4,8 +4,8 @@ source 'https://supermarket.chef.io'
 metadata
 
 cookbook 'poise', '~> 2.8.2'
-cookbook 'poise-service', '~> 1.5.2'
 cookbook 'ulimit', '~> 1.0.0'
+cookbook 'systemd', '~> 3.2.4'
 
 group :integration do
   cookbook 'test-clickhouse', path: 'test/integration/cookbooks/test-clickhouse'
