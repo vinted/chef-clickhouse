@@ -14,6 +14,39 @@ Installs and manages ClickHouse server instances.
 ## Attributes
 
 ```ruby
+default['clickhouse']['user'] = 'clickhouse'
+default['clickhouse']['group'] = 'clickhouse'
+
+case node['platform']
+when 'rhel', 'centos'
+  default['clickhouse']['server']['version'] = '18.14.10'
+when 'ubuntu', 'debian'
+  default['clickhouse']['server']['version'] = '1.1.54343'
+end
+
+# Override config.xml Chef template resource `cookbook` location.
+# Useful in wrapping cookbooks.
+default['clickhouse']['server']['configuration']['cookbook'] = 'clickhouse'
+
+# Override users.xml Chef template resource `cookbook` location.
+# Useful in wrapping cookbooks.
+default['clickhouse']['server']['users']['cookbook'] = 'clickhouse'
+
+# Override zookeeper-servers.xml Chef template resource `cookbook` location.
+# Useful in wrapping cookbooks.
+default['clickhouse']['server']['zookeeper']['cookbook'] = 'clickhouse'
+
+# Override macros.xml Chef template resource `cookbook` location.
+# Useful in wrapping cookbooks.
+default['clickhouse']['server']['macros']['cookbook'] = 'clickhouse'
+
+# Override remote_servers.xml Chef template resource `cookbook` location.
+# Useful in wrapping cookbooks.
+default['clickhouse']['server']['remote_servers']['cookbook'] = 'clickhouse'
+
+# Override compression.xml Chef template resource `cookbook` location.
+# Useful in wrapping cookbooks.
+default['clickhouse']['server']['compression']['cookbook'] = 'clickhouse'
 ```
 
 Also:
@@ -65,11 +98,8 @@ There are two ways to install ClickHouse.
     <yandex>
       <compression>
           <case>
-            <!- - Conditions. All must be satisfied. Some conditions may be omitted. - ->
-            <min_part_size>10000000000</min_part_size>        <!- - Min part size in bytes. - ->
-            <min_part_size_ratio>0.01</min_part_size_ratio>   <!- - Min size of part relative to whole table size. - ->
-
-            <!- - What compression method to use. - ->
+            <min_part_size>10000000000</min_part_size>
+            <min_part_size_ratio>0.01</min_part_size_ratio>
             <method>zstd</method>
           </case>
       </compression>
