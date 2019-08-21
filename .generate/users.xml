@@ -1,0 +1,19 @@
+# Auto generated from: clickhouse-server/users.xml'
+default['clickhouse']['server']['config']['profiles']['default']['max_memory_usage'] = 10000000000
+default['clickhouse']['server']['config']['profiles']['default']['use_uncompressed_cache'] = 0
+default['clickhouse']['server']['config']['profiles']['default']['load_balancing'] = 'random'
+default['clickhouse']['server']['config']['profiles']['readonly']['readonly'] = 1
+default['clickhouse']['server']['config']['users']['default']['networks']['incl'] = 'networks'
+default['clickhouse']['server']['config']['users']['default']['networks']['replace'] = 'replace'
+default['clickhouse']['server']['config']['users']['default']['networks']['ip'] = '::/0'
+default['clickhouse']['server']['config']['users']['default']['profile'] = 'default'
+default['clickhouse']['server']['config']['users']['default']['quota'] = 'default'
+default['clickhouse']['server']['config']['users']['default']['databases']['test']['filtered_table1']['filter'] = 'a = 1'
+default['clickhouse']['server']['config']['users']['default']['databases']['test']['filtered_table2']['filter'] = 'a + b < 1 or c - d > 5'
+default['clickhouse']['server']['config']['users']['default']['databases']['test']['filtered_table3']['filter'] = 'c = 1'
+default['clickhouse']['server']['config']['quotas']['default']['interval']['duration'] = 3600
+default['clickhouse']['server']['config']['quotas']['default']['interval']['queries'] = 0
+default['clickhouse']['server']['config']['quotas']['default']['interval']['errors'] = 0
+default['clickhouse']['server']['config']['quotas']['default']['interval']['result_rows'] = 0
+default['clickhouse']['server']['config']['quotas']['default']['interval']['read_rows'] = 0
+default['clickhouse']['server']['config']['quotas']['default']['interval']['execution_time'] = 0

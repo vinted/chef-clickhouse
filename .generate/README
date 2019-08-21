@@ -1,0 +1,18 @@
+1. Get docker vitess container, specify new version
+
+2. Run container
+docker run -it yandex/clickhouse-server:19.13.2.19
+
+3. In other window check running container process
+$ docker ps
+CONTAINER ID        IMAGE                                 COMMAND             CREATED             STATUS              PORTS                          NAMES
+4a20e2cee9ed        yandex/clickhouse-server:19.13.2.19   "/entrypoint.sh"    16 seconds ago      Up 3 seconds        8123/tcp, 9000/tcp, 9009/tcp   optimistic_nobel
+
+4. Copy vt config from container
+$ docker cp 4a20e2cee9ed:/etc/init.d .
+$ docker cp 4a20e2cee9ed:/etc/clickhouse-server .
+$ docker cp 4a20e2cee9ed:/etc/init.d .
+
+5. Generate config
+ruby parse_config.rb clickhouse-server/users.xml > users.xml
+ruby parse_config.rb clickhouse-server/config.xml > config.xml
