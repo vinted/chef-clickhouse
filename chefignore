@@ -9,6 +9,7 @@ Icon?
 nohup.out
 ehthumbs.db
 Thumbs.db
+.generate
 
 # SASS #
 ########
