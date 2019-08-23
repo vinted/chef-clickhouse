@@ -37,6 +37,8 @@ class Chef
         kind_of: [Hash, Chef::Node::ImmutableMash],
         default: lazy { node['clickhouse']['server']['users'] }
       )
+      attribute(:zookeeper_config_install, kind_of: [TrueClass, FalseClass], default: true)
+      attribute(:zookeeper_config_nodes, kind_of: Array, default: lazy { raise "Provide Zookeeper hosts e.g.: [{host: 'localhost', port: 2181}]" })
 
       # Service
       attribute(:service_name, kind_of: String, default: 'clickhouse-server')
@@ -93,6 +95,7 @@ class Chef
           format_schema_path,
           user_files_path
         )
+        install_zookeeper if new_resource.zookeeper_config_install
         install_config
         install_users
         install_service
@@ -119,6 +122,14 @@ class Chef
         ::File.join(service_config_path, 'conf.d')
       end
 
+      def install_zookeeper
+        clickhouse_zookeeper_config "Zookeeper config for service #{new_resource.service_name}" do
+          nodes new_resource.zookeeper_config_nodes
+          config_name new_resource.config['zookeeper']['incl']
+          service_name new_resource.service_name
+        end
+      end
+
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/LineLength
       # rubocop:disable Style/FormatStringToken
@@ -139,17 +150,13 @@ class Chef
       end
 
       def template_config
-        dp = data_path
-        tdp = temp_data_path
-        fsp = format_schema_path
-        ufp = user_files_path
         {
           config: new_resource.config,
           log_path: log_path,
-          data_path: dp.end_with?('/') ? dp : "#{dp}/",
-          temp_data_path: tdp.end_with?('/') ? tdp : "#{tdp}/",
-          format_schema_path: fsp.end_with?('/') ? fsp : "#{fsp}/",
-          user_files_path: ufp.end_with?('/') ? ufp : "#{ufp}/"
+          data_path: data_path.end_with?('/') ? data_path : "#{data_path}/",
+          temp_data_path: temp_data_path.end_with?('/') ? temp_data_path : "#{temp_data_path}/",
+          format_schema_path: format_schema_path.end_with?('/') ? format_schema_path : "#{format_schema_path}/",
+          user_files_path: user_files_path.end_with?('/') ? user_files_path : "#{user_files_path}/"
         }
       end
 
@@ -196,7 +203,7 @@ class Chef
       end
 
       def pid_file_path
-        "/var/run/#{new_resource.service_name}.pid"
+        "/var/run/#{new_resource.service_name}/server.pid"
       end
 
       def log_path
@@ -224,6 +231,7 @@ class Chef
             user new_resource.user
             group new_resource.group
             kill_signal 'TERM'
+            runtime_directory new_resource.service_name
           end
         end
       end
