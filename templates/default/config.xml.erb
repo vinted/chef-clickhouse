@@ -92,7 +92,7 @@
 
     <!-- Set limit on number of open files (default: maximum). This setting makes sense on Mac OS X because getrlimit() fails to retrieve
          correct maximum value. -->
-    <!-- <max_open_files>262144</max_open_files> -->
+    <max_open_files><%= @config['max_open_files'] %></max_open_files>
 
     <!-- Size of cache of uncompressed blocks of data, used in tables of MergeTree family.
          In bytes. Cache is single for server. Memory is allocated only on demand.
@@ -148,10 +148,16 @@
     -->
     <!-- <umask>022</umask> -->
 
+    <!-- Perform mlockall after startup to lower first queries latency
+          and to prevent clickhouse executable from being paged out under high IO load.
+         Enabling this option is recommended but will lead to increased startup time for up to a few seconds.
+    -->
+    <mlock_executable><%= @config['mlock_executable'] %></mlock_executable>
+
     <!-- Configuration of clusters that could be used in Distributed tables.
          https://clickhouse.yandex/docs/en/table_engines/distributed/
       -->
-    <remote_servers>
+    <remote_servers incl="<%= @config['remote_servers']['incl'] %>" optional="<%= @config['remote_servers']['optional'] %>">
         <!-- Test only shard config for testing distributed storage -->
         <!-- <test_shard_localhost> -->
         <!--     <shard> -->
@@ -183,14 +189,14 @@
 
          See https://clickhouse.yandex/docs/en/table_engines/replication/
       -->
-    <zookeeper />
+    <zookeeper incl="<%= @config['zookeeper']['incl'] %>" optional="<%= @config['zookeeper']['optional'] %>" />
 
     <!-- Substitutions for parameters of replicated tables.
           Optional. If you don't use replicated tables, you could omit that.
 
          See https://clickhouse.yandex/docs/en/table_engines/replication/#creating-replicated-tables
       -->
-    <macros />
+    <macros incl="<%= @config['macros']['incl'] %>" optional="<%= @config['macros']['optional'] %>" />
 
 
     <!-- Reloading interval for embedded dictionaries, in seconds. Default: 3600. -->
@@ -260,8 +266,32 @@
         <flush_interval_milliseconds><%= @config['query_log']['flush_interval_milliseconds'] %></flush_interval_milliseconds>
     </query_log>
 
+    <% if @config['trace_log']['enable'] %>
+    <!-- Trace log. Stores stack traces collected by query profilers.
+         See query_profiler_real_time_period_ns and query_profiler_cpu_time_period_ns settings. -->
+    <trace_log>
+        <database><%= @config['trace_log']['database'] %></database>
+        <table><%= @config['trace_log']['table'] %></table>
+
+        <partition_by><%= @config['trace_log']['partition_by'] %></partition_by>
+        <flush_interval_milliseconds><%= @config['trace_log']['flush_interval_milliseconds'] %></flush_interval_milliseconds>
+    </trace_log>
+    <% end %>
+
+    <% if @config['query_thread_log']['enable'] %>
+    <!-- Query thread log. Has information about all threads participated in query execution.
+         Used only for queries with setting log_query_threads = 1. -->
+    <query_thread_log>
+        <database><%= @config['query_thread_log']['database'] %></database>
+        <table><%= @config['query_thread_log']['table'] %></table>
+        <partition_by><%= @config['query_thread_log']['partition_by'] %></partition_by>
+        <flush_interval_milliseconds><%= @config['query_thread_log']['flush_interval_milliseconds'] %></flush_interval_milliseconds>
+    </query_thread_log>
+    <% end %>
 
     <% if @config['part_log']['enable'] %>
+    <!-- Uncomment if use part log.
+         Part log contains information about all actions with parts in MergeTree tables (creation, deletion, merges, downloads). -->
     <part_log>
         <database><%= @config['part_log']['partition_by'] %></database>
         <table><%= @config['part_log']['partition_by'] %></table>
@@ -290,7 +320,7 @@
     <!-- Uncomment if you want data to be compressed 30-100% better.
          Don't do that if you just started using ClickHouse.
       -->
-    <compression>
+    <compression incl="<%= @config['compression']['incl'] %>" optional="<%= @config['compression']['optional'] %>">
     <!--
         <!- - Set of variants. Checked in order. Last matching case wins. If nothing matches, lz4 will be used. - ->
         <case>

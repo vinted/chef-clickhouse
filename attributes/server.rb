@@ -1,4 +1,4 @@
-# Auto generated from: config.xml-18.14.10
+# Auto generated from: clickhouse-server/config.xml'
 default['clickhouse']['server']['config']['logger']['level'] = 'trace'
 default['clickhouse']['server']['config']['logger']['size'] = '1000M'
 default['clickhouse']['server']['config']['logger']['count'] = 10
@@ -41,6 +41,7 @@ default['clickhouse']['server']['config']['listen_backlog'] = '64'
 default['clickhouse']['server']['config']['max_connections'] = 4096
 default['clickhouse']['server']['config']['keep_alive_timeout'] = 3
 default['clickhouse']['server']['config']['max_concurrent_queries'] = 100
+default['clickhouse']['server']['config']['max_open_files'] = 262144
 default['clickhouse']['server']['config']['uncompressed_cache_size'] = 8589934592
 default['clickhouse']['server']['config']['mark_cache_size'] = 5368709120
 
@@ -48,6 +49,7 @@ default['clickhouse']['server']['config']['users_config'] = 'users.xml'
 default['clickhouse']['server']['config']['default_profile'] = 'default'
 default['clickhouse']['server']['config']['system_profile'] = 'default'
 default['clickhouse']['server']['config']['default_database'] = 'default'
+default['clickhouse']['server']['config']['mlock_executable'] = false
 
 # Please note, that server could display time zone alias instead of specified name.
 # Example: W-SU is an alias for Europe/Moscow and Zulu is an alias for UTC.
@@ -57,19 +59,51 @@ default['clickhouse']['server']['config']['builtin_dictionaries_reload_interval'
 default['clickhouse']['server']['config']['max_session_timeout'] = 3600
 default['clickhouse']['server']['config']['default_session_timeout'] = 60
 
-# TODO: add graphite?
-
 default['clickhouse']['server']['config']['query_log']['database'] = 'system'
 default['clickhouse']['server']['config']['query_log']['table'] = 'query_log'
 default['clickhouse']['server']['config']['query_log']['partition_by'] = 'toYYYYMM(event_date)'
 default['clickhouse']['server']['config']['query_log']['flush_interval_milliseconds'] = 7500
 
+# Trace log. Stores stack traces collected by query profilers.
+# See query_profiler_real_time_period_ns and query_profiler_cpu_time_period_ns settings.
+default['clickhouse']['server']['config']['trace_log']['enable'] = false
+default['clickhouse']['server']['config']['trace_log']['database'] = 'system'
+default['clickhouse']['server']['config']['trace_log']['table'] = 'trace_log'
+default['clickhouse']['server']['config']['trace_log']['partition_by'] = 'toYYYYMM(event_date)'
+default['clickhouse']['server']['config']['trace_log']['flush_interval_milliseconds'] = 7500
 
+# Uncomment if use part log. Part log contains information about all actions
+# with parts in MergeTree tables (creation, deletion, merges, downloads).
 default['clickhouse']['server']['config']['part_log']['enable'] = false
 default['clickhouse']['server']['config']['part_log']['database'] = 'system'
 default['clickhouse']['server']['config']['part_log']['table'] = 'part_log'
 default['clickhouse']['server']['config']['part_log']['flush_interval_milliseconds'] = 7500
 
+# Query thread log. Has information about all threads participated in query execution.
+# Used only for queries with setting log_query_threads = 1.
+default['clickhouse']['server']['config']['query_thread_log']['enable'] = false
+default['clickhouse']['server']['config']['query_thread_log']['database'] = 'system'
+default['clickhouse']['server']['config']['query_thread_log']['table'] = 'query_thread_log'
+default['clickhouse']['server']['config']['query_thread_log']['partition_by'] = 'toYYYYMM(event_date)'
+default['clickhouse']['server']['config']['query_thread_log']['flush_interval_milliseconds'] = 7500
 
 default['clickhouse']['server']['config']['dictionaries_config'] = '*_dictionary.xml'
 default['clickhouse']['server']['config']['distributed_ddl']['path'] = '/clickhouse/task_queue/ddl'
+
+# Substitutions for parameters of replicated tables.
+# Optional. If you don't use replicated tables, you could omit that.
+default['clickhouse']['server']['config']['macros']['incl'] = 'macros'
+default['clickhouse']['server']['config']['macros']['optional'] = true
+
+# ZooKeeper is used to store metadata about replicas, when using Replicated tables.
+# Optional. If you don't use replicated tables, you could omit that.
+default['clickhouse']['server']['config']['zookeeper']['incl'] = 'zookeeper-servers'
+default['clickhouse']['server']['config']['zookeeper']['optional'] = 'false'
+
+default['clickhouse']['server']['config']['compression']['incl'] = 'clickhouse_compression'
+default['clickhouse']['server']['config']['compression']['optional'] = 'true'
+
+# Configuration of clusters that could be used in Distributed tables.
+# https://clickhouse.yandex/docs/en/table_engines/distributed/
+default['clickhouse']['server']['config']['remote_servers']['incl'] = 'clickhouse_remote_servers'
+default['clickhouse']['server']['config']['remote_servers']['optional'] = 'true'
