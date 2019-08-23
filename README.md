@@ -19,7 +19,7 @@ default['clickhouse']['group'] = 'clickhouse'
 
 case node['platform']
 when 'rhel', 'centos'
-  default['clickhouse']['server']['version'] = '18.14.10'
+  default['clickhouse']['server']['version'] = '19.13.2.19'
 when 'ubuntu', 'debian'
   default['clickhouse']['server']['version'] = '1.1.54343'
 end
@@ -149,6 +149,8 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `server_bin` - ClickHouse server binary name, default is `clickhouse-server`
 - `config` - given configuration of `config.xml`, default is `node['clickhouse']['server']['config']`
 - `users` - given configuration of `config.xml`, `users.xml` include, default is `node['clickhouse']['server']['users']`
+- `zookeeper_config_install` - whether to install Zookeeper config under conf.d
+- `zookeeper_config_nodes` - Zookeeper nodes in format of `[{host: 'localhost', port: 2181}]`
 - `service_name` - defaults to `clickhouse-server`
 - `service_unit_after` - systemd start unit after, default is 'network.target'
 - `service_timeout_sec` - systemd timeout sec, default is 5
@@ -225,6 +227,7 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `nodes` - expects Array of Hash 'es, e.g.: `[{index: 1, host: 'localhost', port: 2181}]`
 - `template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['zookeeper']['cookbook']`
 - `template_source` - template cookbook source, defaults to `zookeeper.xml.erb`
+- `config_name` - defaults to `zookeeper`
 
 ##### Actions
 
