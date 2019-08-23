@@ -9,11 +9,10 @@ class Chef
       # Must be array of hashes, e.g.:
       # [{index: 1, host: 'localhost', port: 2181}]
       # index: key is optional
-      attribute(:nodes, kind_of: Array, default: [])
-
-      def config_name
-        'zookeeper'
-      end
+      attribute(:nodes, kind_of: Array, default: lazy {
+        raise "`nodes` attribute can't be empty"
+      })
+      attribute(:config_name, kind_of: String, default: 'zookeeper')
 
       def template_cookbook
         node['clickhouse']['server']['zookeeper']['cookbook']
@@ -38,7 +37,6 @@ class Chef
       def validate!
         super
         nodes = new_resource.nodes
-        raise_error_msg "`nodes` attribute can't be empty" if nodes.empty?
         unless nodes.is_a?(Array)
           raise_error_msg '`nodes` attribute must be Array'
         end
