@@ -5,6 +5,7 @@ settings:
 driver:
   name: docker
   use_sudo: false
+  require_chef_omnibus: 12
 
 provisioner:
   name: chef_zero
