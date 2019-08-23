@@ -1,4 +1,4 @@
-describe file('/etc/clickhouse-server/clickhouse-server-test/conf.d/zookeeper.xml') do
+describe file('/etc/clickhouse-server/clickhouse-server-test/conf.d/kitchen_custom_zookeeper.xml') do
   it { should exist }
   it { should be_file }
   it { should be_mode 00640 }
