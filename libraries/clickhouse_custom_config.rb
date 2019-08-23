@@ -72,7 +72,7 @@ class Chef
       end
 
       def custom_config_path
-        ::File.join(service_config_path, new_resource.config_name)
+        ::File.join(service_conf_d_path, new_resource.config_name)
       end
     end
   end

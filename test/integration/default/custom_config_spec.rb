@@ -1,4 +1,4 @@
-describe file('/etc/clickhouse-server/clickhouse-server-test/test-custom.xml') do
+describe file('/etc/clickhouse-server/clickhouse-server-test/conf.d/test-custom.xml') do
   it { should exist }
   it { should be_file }
   it { should be_mode 0o640 }
