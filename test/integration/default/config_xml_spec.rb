@@ -1,5 +1,5 @@
 settings_to_test = %w(
-  <level>error</level>
+  <level>information</level>
   <size>101M</size>
   <count>100</count>
   <display_name>kitchen-test</display_name>
@@ -22,10 +22,10 @@ settings_to_test = %w(
   <max_session_timeout>4999</max_session_timeout>
   <default_session_timeout>41</default_session_timeout>
 ) + [
-  '<remote_servers>',
-  '<zookeeper />',
-  '<macros />',
-  '<compression>',
+  '<remote_servers incl="clickhouse_remote_servers" optional="true">',
+  '<zookeeper incl="zookeeper-servers" optional="false" />',
+  '<macros incl="macros" optional="true" />',
+  '<compression incl="clickhouse_compression" optional="true">',
 ]
 
 describe file('/etc/clickhouse-server/clickhouse-server-test/config.xml') do

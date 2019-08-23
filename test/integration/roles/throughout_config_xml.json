@@ -5,7 +5,7 @@
       "server": {
         "config": {
           "logger": {
-            "level": "error",
+            "level": "information",
             "count": "100",
             "size": "101M"
           },
