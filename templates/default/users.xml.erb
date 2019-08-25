@@ -27,7 +27,11 @@
     </profiles>
 
     <!-- Users and ACL. -->
-    <users incl="<%= @users['users']['incl'] %>" optional="<%= @users['users']['optional'] %>">
+    <% if @users['users']['incl'].empty? %>
+      <users>
+    <% else %>
+      <users incl="<%= @users['users']['incl'] %>" optional="<%= @users['users']['optional'] %>">
+    <% end %>
         <!-- If user name was not specified, 'default' user is used. -->
         <default>
             <!-- Password could be specified in plaintext or in SHA256 (in hex format).
@@ -64,7 +68,11 @@
                      Strongly recommended that regexp is ends with $
                  All results of DNS requests are cached till server restart.
             -->
-            <networks incl="<% @users['users']['default']['networks']['incl'] %>" replace="<% @users['users']['default']['networks']['replace'] %>">
+            <% if @users['users']['default']['networks']['incl'].empty? %>
+            <networks>
+            <% else %>
+            <networks incl="<%= @users['users']['default']['networks']['incl'] %>" replace="<%= @users['users']['default']['networks']['replace'] %>" optional="<%= @users['users']['default']['networks']['optional'] %>">
+            <% end %>
               <% @users['users']['default']['networks']['ip'].each do |ip| %>
                 <ip><%= ip %></ip>
               <% end %>

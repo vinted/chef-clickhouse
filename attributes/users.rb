@@ -18,11 +18,12 @@ default['clickhouse']['server']['users']['profiles']['default']['load_balancing'
 default['clickhouse']['server']['users']['profiles']['readonly']['readonly'] = 1
 
 
-default['clickhouse']['server']['users']['users']['incl'] = 'additional-users.xml'
-default['clickhouse']['server']['users']['users']['optional'] = 'true'
+default['clickhouse']['server']['users']['users']['incl'] = ''
+default['clickhouse']['server']['users']['users']['optional'] = true
 
-default['clickhouse']['server']['users']['users']['default']['networks']['incl'] = 'networks'
+default['clickhouse']['server']['users']['users']['default']['networks']['incl'] = ''
 default['clickhouse']['server']['users']['users']['default']['networks']['replace'] = 'replace'
+default['clickhouse']['server']['users']['users']['default']['networks']['optional'] = true
 default['clickhouse']['server']['users']['users']['default']['networks']['ip'] = %w[
   ::/0
 ]

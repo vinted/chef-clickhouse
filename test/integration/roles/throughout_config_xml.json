@@ -19,6 +19,16 @@
           "builtin_dictionaries_reload_interval": 12,
           "max_session_timeout": 4999,
           "default_session_timeout": 41
+        },
+        "users": {
+          "users": {
+            "default": {
+              "password": "chef-kitchen"
+            },
+            "readonly": {
+              "password": "chef-kitchen-readonly"
+            }
+          }
         }
       }
     }
