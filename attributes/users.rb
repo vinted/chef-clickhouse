@@ -21,6 +21,10 @@ default['clickhouse']['server']['users']['profiles']['readonly']['readonly'] = 1
 default['clickhouse']['server']['users']['users']['incl'] = ''
 default['clickhouse']['server']['users']['users']['optional'] = true
 
+default['clickhouse']['server']['users']['users']['default']['enabled'] = true
+default['clickhouse']['server']['users']['users']['default']['password'] = ''
+default['clickhouse']['server']['users']['users']['default']['profile'] = 'default'
+default['clickhouse']['server']['users']['users']['default']['quota'] = 'default'
 default['clickhouse']['server']['users']['users']['default']['networks']['incl'] = ''
 default['clickhouse']['server']['users']['users']['default']['networks']['replace'] = 'replace'
 default['clickhouse']['server']['users']['users']['default']['networks']['optional'] = true
@@ -28,17 +32,22 @@ default['clickhouse']['server']['users']['users']['default']['networks']['ip'] =
   ::/0
 ]
 
-default['clickhouse']['server']['users']['users']['default']['password'] = ''
-default['clickhouse']['server']['users']['users']['default']['profile'] = 'default'
-default['clickhouse']['server']['users']['users']['default']['quota'] = 'default'
-
+default['clickhouse']['server']['users']['users']['readonly']['enabled'] = true
 default['clickhouse']['server']['users']['users']['readonly']['password'] = ''
+default['clickhouse']['server']['users']['users']['readonly']['profile'] = 'readonly'
+default['clickhouse']['server']['users']['users']['readonly']['quota'] = 'default'
 default['clickhouse']['server']['users']['users']['readonly']['networks']['ip'] = %w[
+  ::/0
+]
+
+default['clickhouse']['server']['users']['users']['chef']['enabled'] = true
+default['clickhouse']['server']['users']['users']['chef']['password'] = ''
+default['clickhouse']['server']['users']['users']['chef']['profile'] = 'default'
+default['clickhouse']['server']['users']['users']['chef']['quota'] = 'default'
+default['clickhouse']['server']['users']['users']['chef']['networks']['ip'] = %w[
   ::1
   127.0.0.1
 ]
-default['clickhouse']['server']['users']['users']['readonly']['profile'] = 'readonly'
-default['clickhouse']['server']['users']['users']['readonly']['quota'] = 'default'
 
 default['clickhouse']['server']['users']['quotas']['default']['interval']['duration'] = 3600
 default['clickhouse']['server']['users']['quotas']['default']['interval']['queries'] = 0

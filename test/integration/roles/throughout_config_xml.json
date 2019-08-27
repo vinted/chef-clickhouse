@@ -25,6 +25,9 @@
             "default": {
               "password": "chef-kitchen"
             },
+            "chef": {
+              "password": "chef-chef"
+            },
             "readonly": {
               "password": "chef-kitchen-readonly"
             }

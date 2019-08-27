@@ -32,6 +32,7 @@
     <% else %>
       <users incl="<%= @users['users']['incl'] %>" optional="<%= @users['users']['optional'] %>">
     <% end %>
+        <% if @users['users']['default']['enabled'] %>
         <!-- If user name was not specified, 'default' user is used. -->
         <default>
             <!-- Password could be specified in plaintext or in SHA256 (in hex format).
@@ -84,7 +85,22 @@
             <!-- Quota for user. -->
             <quota><%= @users['users']['default']['quota'] %></quota>
         </default>
+        <% end %>
 
+        <% if @users['users']['chef']['enabled'] %>
+        <chef>
+          <password><%= @users['users']['chef']['password'] %></password>
+          <networks>
+            <% @users['users']['chef']['networks']['ip'].each do |ip| %>
+              <ip><%= ip %></ip>
+            <% end %>
+          </networks>
+          <profile><%= @users['users']['chef']['profile'] %></profile>
+          <quota><%= @users['users']['chef']['quota'] %></quota>
+        </chef>
+        <% end %>
+
+        <% if @users['users']['readonly']['enabled'] %>
         <!-- Example of user with readonly access. -->
         <readonly>
             <password><%= @users['users']['readonly']['password'] %></password>
@@ -96,6 +112,7 @@
             <profile><%= @users['users']['readonly']['profile'] %></profile>
             <quota><%= @users['users']['readonly']['quota'] %></quota>
         </readonly>
+        <% end %>
     </users>
 
     <!-- Quotas. -->
