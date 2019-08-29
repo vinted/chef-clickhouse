@@ -1,12 +1,12 @@
 name 'clickhouse'
-maintainer 'Ernestas Poskus'
-maintainer_email 'ernestas.poskus@gmail.com'
+maintainer 'Vinted'
+maintainer_email 'sre@vinted.com'
 license 'MIT'
 description 'Installs/Configures chef-clickhouse'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-issues_url 'https://github.com/ernestas-poskus/chef-clickhouse/issues'
-source_url 'https://github.com/ernestas-poskus/chef-clickhouse'
-version '0.6.0'
+issues_url 'https://github.com/vinted/chef-clickhouse/issues'
+source_url 'https://github.com/vinted/chef-clickhouse'
+version '0.7.0'
 chef_version '>= 12.5' if respond_to?(:chef_version)
 
 supports 'redhat'

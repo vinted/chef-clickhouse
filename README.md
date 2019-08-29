@@ -1,6 +1,6 @@
 # chef-clickhouse
 
-[![Build Status](https://travis-ci.org/ernestas-poskus/chef-clickhouse.svg?branch=master)](https://travis-ci.org/ernestas-poskus/chef-clickhouse)
+[![Build Status](https://travis-ci.org/vinted/chef-vitess.svg?branch=master)](https://travis-ci.org/vinted/chef-vitess)
 [![Cookbook Version](https://img.shields.io/cookbook/v/clickhouse.svg)](https://supermarket.chef.io/cookbooks/clickhouse)
 
 Installs and manages ClickHouse server instances.
@@ -316,7 +316,7 @@ https://github.com/yandex/ClickHouse/issues/1272
 ```text
 MIT License
 
-Copyright (c) 2018 Ernestas Poskus
+Copyright (c) 2019-present Vinted
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
