@@ -22,7 +22,7 @@ settings_to_test = %w(
   <max_session_timeout>4999</max_session_timeout>
   <default_session_timeout>41</default_session_timeout>
 ) + [
-  '<remote_servers incl="clickhouse_remote_servers" optional="true">',
+  '<remote_servers incl="remote_servers" optional="true">',
   '<zookeeper incl="zookeeper-servers" optional="false" />',
   '<macros incl="macros" optional="true" />',
   '<compression incl="clickhouse_compression" optional="true">',
