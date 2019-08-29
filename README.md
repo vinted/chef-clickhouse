@@ -56,30 +56,25 @@ Also:
 
 ## Usage
 
-Place a dependency on the mysql cookbook in your cookbook's metadata.rb
+Place a dependency on the clickhouse cookbook in your cookbook's metadata.rb
 
 ```ruby
 depends 'clickhouse'
 ```
 
-There are two ways to install ClickHouse.
+  Don't forget to set password for default,readonly and chef users
+  or disable them completely.
 
-  1. By including recipe
-  ```ruby
-  include_recipe 'clickhouse::server'
-  ```
-  2. By using Chef resources, note service_name here, it must be same
+### To install ClickHouse.
+
+  Use Chef resources, note service_name here, it must be same
   per configured ClickHouse service instance.
   ```ruby
   clickhouse_server_service 'clickhouse server instance' do
     service_name 'clickhouse-server-test'
-  end
-
-  clickhouse_zookeeper_config 'clickhouse server zookeeper config' do
-    service_name 'clickhouse-server-test'
-    nodes [
-      { host: '127.0.0.1', port: 2181 }
-    ]
+    # This attribute automatically generates Zookeeper config 'zookeeper-servers.xml'
+    # To disable automatic generation set zookeeper_config_install to false
+    zookeeper_config_nodes [{host: 'localhost', port: 2181}]
   end
 
   clickhouse_macros_config 'clickhouse server macros config' do
@@ -223,11 +218,10 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `group` - operating system group to run ClickHouse
 - `config_dir` - configuration namespace directory, default is /etc/clickhouse-server/{custom instance}
 - `service_name` - defaults to `clickhouse-server`
-- `config_name` - defaults to `node['clickhouse']['server']['config']['macros']['incl']`
+- `config_name` - defaults to `zookeeper`
 - `nodes` - expects Array of Hash 'es, e.g.: `[{index: 1, host: 'localhost', port: 2181}]`
 - `template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['zookeeper']['cookbook']`
 - `template_source` - template cookbook source, defaults to `zookeeper.xml.erb`
-- `config_name` - defaults to `zookeeper`
 
 ##### Actions
 
