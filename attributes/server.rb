@@ -105,5 +105,5 @@ default['clickhouse']['server']['config']['compression']['optional'] = 'true'
 
 # Configuration of clusters that could be used in Distributed tables.
 # https://clickhouse.yandex/docs/en/table_engines/distributed/
-default['clickhouse']['server']['config']['remote_servers']['incl'] = 'clickhouse_remote_servers'
+default['clickhouse']['server']['config']['remote_servers']['incl'] = 'remote_servers'
 default['clickhouse']['server']['config']['remote_servers']['optional'] = 'true'
