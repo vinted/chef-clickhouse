@@ -7,7 +7,7 @@ class Chef
       provides(:clickhouse_zookeeper_config)
 
       # Must be array of hashes, e.g.:
-      # [{index: 1, host: 'localhost', port: 2181}]
+      # [{index: 1, 'host' => 'localhost', 'port' => 2181}]
       # index: key is optional
       attribute(:nodes, kind_of: Array, default: lazy {
         raise "`nodes` attribute can't be empty"
@@ -42,9 +42,9 @@ class Chef
         end
         nodes.each do |node|
           raise_error_msg "#{node} must be hash" unless node.is_a?(Hash)
-          raise_error_msg "#{node} missing key :host" unless node[:host]
-          raise_error_msg "#{node} missing key :port" unless node[:port]
-          raise_error_msg "#{node} key :port must be Integer" unless node[:port].is_a?(Integer)
+          raise_error_msg "#{node} missing key 'host'" unless node['host']
+          raise_error_msg "#{node} missing key 'port'" unless node['port']
+          raise_error_msg "#{node} key 'port' must be Integer" unless node['port'].is_a?(Integer)
         end
       end
 

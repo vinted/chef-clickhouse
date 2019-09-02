@@ -74,7 +74,7 @@ depends 'clickhouse'
     service_name 'clickhouse-server-test'
     # This attribute automatically generates Zookeeper config 'zookeeper-servers.xml'
     # To disable automatic generation set zookeeper_config_install to false
-    zookeeper_config_nodes [{host: 'localhost', port: 2181}]
+    zookeeper_config_nodes [{'host' => 'localhost', 'port' => 2181}]
   end
 
   clickhouse_macros_config 'clickhouse server macros config' do
@@ -145,7 +145,7 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `config` - given configuration of `config.xml`, default is `node['clickhouse']['server']['config']`
 - `users` - given configuration of `config.xml`, `users.xml` include, default is `node['clickhouse']['server']['users']`
 - `zookeeper_config_install` - whether to install Zookeeper config under conf.d
-- `zookeeper_config_nodes` - Zookeeper nodes in format of `[{host: 'localhost', port: 2181}]`
+- `zookeeper_config_nodes` - Zookeeper nodes in format of `[{'host' => 'localhost', 'port' => 2181}]`
 - `service_name` - defaults to `clickhouse-server`
 - `service_unit_after` - systemd start unit after, default is 'network.target'
 - `service_timeout_sec` - systemd timeout sec, default is 5
@@ -205,7 +205,7 @@ The `:create` action zookeeper file installation.
 clickhouse_zookeeper_config 'custom instance' do
   service_name 'clickhouse-server-custom'
   nodes [
-    { host: '127.0.0.1', port: 2181 }
+    { 'host' => '127.0.0.1', 'port' => 2181 }
   ]
 end
 ```
@@ -219,7 +219,7 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `config_dir` - configuration namespace directory, default is /etc/clickhouse-server/{custom instance}
 - `service_name` - defaults to `clickhouse-server`
 - `config_name` - defaults to `zookeeper`
-- `nodes` - expects Array of Hash 'es, e.g.: `[{index: 1, host: 'localhost', port: 2181}]`
+- `nodes` - expects Array of Hash 'es, e.g.: `[{index: 1, 'host' => 'localhost', 'port' => 2181}]`
 - `template_cookbook` - template cookbook source, defaults to `node['clickhouse']['server']['zookeeper']['cookbook']`
 - `template_source` - template cookbook source, defaults to `zookeeper.xml.erb`
 
