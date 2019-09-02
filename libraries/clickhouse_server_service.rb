@@ -38,7 +38,7 @@ class Chef
         default: lazy { node['clickhouse']['server']['users'] }
       )
       attribute(:zookeeper_config_install, kind_of: [TrueClass, FalseClass], default: true)
-      attribute(:zookeeper_config_nodes, kind_of: Array, default: lazy { raise "Provide Zookeeper hosts e.g.: [{host: 'localhost', port: 2181}]" })
+      attribute(:zookeeper_config_nodes, kind_of: Array, default: lazy { raise "Provide Zookeeper hosts e.g.: [{'host' => 'localhost', 'port' => 2181}]" })
 
       # Service
       attribute(:service_name, kind_of: String, default: 'clickhouse-server')

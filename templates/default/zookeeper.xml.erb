@@ -2,8 +2,8 @@
     <zookeeper>
         <% @nodes.each_with_index do |no, i| %>
           <node index="<%= no[:index] || i %>">
-              <host><%= no[:host] %></host>
-              <port><%= no[:port] %></port>
+              <host><%= no['host'] %></host>
+              <port><%= no['port'] %></port>
           </node>
         <% end %>
     </zookeeper>
