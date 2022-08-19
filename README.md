@@ -18,7 +18,7 @@ default['clickhouse']['user'] = 'clickhouse'
 default['clickhouse']['group'] = 'clickhouse'
 
 case node['platform']
-when 'rhel', 'centos'
+when 'rhel', 'centos', 'rocky'
   default['clickhouse']['server']['version'] = '19.13.2.19'
 when 'ubuntu', 'debian'
   default['clickhouse']['server']['version'] = '1.1.54343'

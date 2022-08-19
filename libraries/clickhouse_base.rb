@@ -47,7 +47,7 @@ class Chef
       end
 
       def rhel_family?
-        %w[rhel centos].include?(node['platform'])
+        %w[rhel centos rocky].include?(node['platform'])
       end
 
       def debian_family?
@@ -75,7 +75,7 @@ class Chef
       end
 
       def platform_supported?
-        return if %w[redhat centos debian ubuntu].include?(node['platform'])
+        return if %w[redhat centos rocky debian ubuntu].include?(node['platform'])
         raise_error_msg "Platform #{node['platform']} is not supported"
       end
 
@@ -123,18 +123,27 @@ class Chef
       # rubocop:disable Metrics/MethodLength
       def install_clickhouse_repository
         case node['platform']
-        when 'rhel', 'centos'
-          execute 'curl -s https://packagecloud.io/install/repositories/Altinity/clickhouse/script.rpm.sh | sudo bash' do
-            creates '/etc/yum.repos.d/Altinity_clickhouse.repo'
+        when 'rhel', 'centos', 'rocky'
+          yum_repository 'altinity' do
+            description 'Altinity Stable Builds'
+            baseurl 'https://builds.altinity.cloud/yum-repo'
+            gpgkey='https://builds.altinity.cloud/yum-repo/RPM-GPG-KEY-altinity'
+            gpgcheck false
+            enabled true
+            action :create
           end
         when 'ubuntu', 'debian'
           execute 'apt_update_for_chef_clickhouse' do
             command %(apt-get update)
             action :nothing
           end
-
-          execute 'curl -s https://packagecloud.io/install/repositories/Altinity/clickhouse/script.deb.sh | sudo bash' do
-            creates '/etc/apt/sources.list.d/Altinity_clickhouse.list'
+          package %w[software-properties-common apt-transport-https]
+          apt_repository 'altinity-dev' do
+            uri          'https://builds.altinity.cloud/apt-repo'
+            key 'https://builds.altinity.cloud/apt-repo/pubkey.gpg'
+            components ['main']
+            distribution 'stable'
+            trusted true
             notifies :run, 'execute[apt_update_for_chef_clickhouse]', :immediate
           end
         end

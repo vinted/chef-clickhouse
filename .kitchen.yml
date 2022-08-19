@@ -4,11 +4,13 @@ settings:
 
 driver:
   name: docker
+  product_name: cinc
   use_sudo: false
   require_chef_omnibus: 12
 
 provisioner:
   name: chef_zero
+  product_name: cinc
   nodes_path: 'test/integration/nodes'
   data_bags_path: 'test/integration/data_bags'
   environments_path: 'test/integration/environments'
@@ -18,6 +20,12 @@ verifier:
   name: inspec
 
 platforms:
+  - name: rockylinux-8
+    driver_plugin: docker
+    driver:
+      image: rockylinux:8
+      run_command: '/usr/lib/systemd/systemd'
+      run_options: '--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'
   - name: centos-7
     driver_plugin: docker
     driver:
