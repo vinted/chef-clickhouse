@@ -236,10 +236,22 @@ class Chef
         end
       end
 
+      def package_name
+        if debian_family?
+          'clickhouse-server-base'
+        else
+          'clickhouse-server'
+        end
+      end
+
       def install_clickhouse_server_package
-        package 'clickhouse-server' do
+        version = [
+          new_resource.version,
+          new_resource.package_release
+        ].compact.join('-')
+        package package_name do
           flush_cache %i[before] if rhel_family?
-          version new_resource.version
+          version version
         end
 
         %w[

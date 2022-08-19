@@ -1,5 +1,5 @@
 def rhel_family?
-  %w[rhel centos rocky].include?(os[:platform])
+  %w[rhel centos].include?(os[:platform])
 end
 
 def debian_family?

@@ -1,22 +1,30 @@
-openjdk_install '11'
+case node['platform']
+when 'rhel', 'centos'
+  execute 'rpm -Uhv https://archive.cloudera.com/cdh5/one-click-install/redhat/7/x86_64/cloudera-cdh-5-0.x86_64.rpm' do
+    creates '/etc/yum.repos.d/cloudera-cdh5.repo'
+  end
 
-directory '/usr/lib/zookeeper' do
-  mode '0755'
-  action :create
-end
+  package %w[java-1.8.0-openjdk zookeeper]
 
-execute 'curl -k https://dlcdn.apache.org/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz | tar -xz --strip-components 1 -C /usr/lib/zookeeper' do
-  creates '/usr/lib/zookeeper/bin/zkServer.sh'
-end
+  # dirty way to start zookeeper
+  execute 'start zookeeper' do
+    command '/usr/lib/zookeeper/bin/zkServer.sh start'
+    creates '/var/lib/zookeeper/zookeeper_server.pid'
+    action :run
+  end
+when 'debian', 'ubuntu'
+  package %w[wget software-properties-common apt-transport-https]
 
-file '/usr/lib/zookeeper/conf/zoo.cfg' do
-  content lazy { ::File.open('/usr/lib/zookeeper/conf/zoo_sample.cfg').read }
-  mode '0755'
-end
+  execute 'download mysql-apt-config' do
+    command %(wget 'http://archive.cloudera.com/cdh5/ubuntu/trusty/amd64/cdh/cloudera.list' -O /etc/apt/sources.list.d/cloudera.list)
+    action :run
+  end
 
-# dirty way to start zookeeper
-execute 'start zookeeper' do
-  command '/usr/lib/zookeeper/bin/zkServer.sh start'
-  creates '/tmp/zookeeper/zookeeper_server.pid'
-  action :run
+  apt_update 'update'
+
+  package %w[zookeeper zookeeperd]
+
+  service 'zookeeper' do
+    action :start
+  end
 end
