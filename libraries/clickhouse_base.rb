@@ -47,7 +47,7 @@ class Chef
       end
 
       def rhel_family?
-        %w[rhel centos rocky].include?(node['platform'])
+        %w[redhat centos rocky].include?(node['platform'])
       end
 
       protected
@@ -119,7 +119,7 @@ class Chef
       # rubocop:disable Metrics/MethodLength
       def install_clickhouse_repository
         case node['platform']
-        when 'rhel', 'centos', 'rocky'
+        when 'redhat', 'centos', 'rocky'
           yum_repository 'altinity' do
             description 'Altinity Stable Builds'
             baseurl 'https://builds.altinity.cloud/yum-repo'
