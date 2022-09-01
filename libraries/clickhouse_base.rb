@@ -47,7 +47,7 @@ class Chef
       end
 
       def rhel_family?
-        %w[redhat centos rocky].include?(node['platform'])
+        %w(redhat centos rocky).include?(node['platform'])
       end
 
       protected
@@ -71,7 +71,7 @@ class Chef
       end
 
       def platform_supported?
-        return if %w[redhat centos rocky debian ubuntu].include?(node['platform'])
+        return if %w(redhat centos rocky debian ubuntu).include?(node['platform'])
         raise_error_msg "Platform #{node['platform']} is not supported"
       end
 
@@ -118,8 +118,7 @@ class Chef
       # rubocop:disable Metrics/LineLength
       # rubocop:disable Metrics/MethodLength
       def install_clickhouse_repository
-        case node['platform']
-        when 'redhat', 'centos', 'rocky'
+        if platform?('redhat', 'centos', 'rocky')
           yum_repository 'altinity' do
             description 'Altinity Stable Builds'
             baseurl 'https://builds.altinity.cloud/yum-repo'

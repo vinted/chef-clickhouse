@@ -4,7 +4,8 @@ describe file('/etc/clickhouse-server/clickhouse-server-test/conf.d/compression.
   it { should be_mode 0o640 }
   it { should be_owned_by 'clickhouse' }
   it { should be_grouped_into 'clickhouse' }
-  its(:content) { should match(<<-CONF
+  its(:content) do
+    should match(<<-CONF
   <yandex>
     <compression>
         <case>
@@ -15,5 +16,6 @@ describe file('/etc/clickhouse-server/clickhouse-server-test/conf.d/compression.
     </compression>
   </yandex>
   CONF
-  ) }
+                )
+  end
 end

@@ -6,9 +6,9 @@ class Chef
 
       # Must be array of hashes, e.g.:
       # [{'server_id': 1, 'host' => 'localhost'}]
-      attribute(:nodes, kind_of: Array, default: lazy {
+      attribute(:nodes, kind_of: Array, default: lazy do
         raise "`nodes` attribute can't be empty"
-      })
+      end)
       attribute(
         :config,
         kind_of: [Hash, Chef::Node::ImmutableMash],
@@ -60,7 +60,7 @@ class Chef
         {
           server_id: keeper_server_id,
           nodes: new_resource.nodes,
-          config: new_resource.config
+          config: new_resource.config,
         }
       end
 

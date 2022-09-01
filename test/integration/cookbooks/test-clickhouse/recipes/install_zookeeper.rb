@@ -10,7 +10,7 @@ execute 'curl -k https://dlcdn.apache.org/zookeeper/zookeeper-3.8.0/apache-zooke
 end
 
 file '/usr/lib/zookeeper/conf/zoo.cfg' do
-  content lazy { ::File.open('/usr/lib/zookeeper/conf/zoo_sample.cfg').read }
+  content lazy { ::File.read('/usr/lib/zookeeper/conf/zoo_sample.cfg') }
   mode '0755'
 end
 
