@@ -107,3 +107,57 @@ default['clickhouse']['server']['config']['compression']['optional'] = 'true'
 # https://clickhouse.yandex/docs/en/table_engines/distributed/
 default['clickhouse']['server']['config']['remote_servers']['incl'] = 'remote_servers'
 default['clickhouse']['server']['config']['remote_servers']['optional'] = 'true'
+
+# Clickhouse Keeper config
+default['clickhouse']['server']['config']['keeper']['incl'] = 'keeper'
+default['clickhouse']['server']['config']['keeper']['optional'] = 'true'
+# Keeper port for clients
+default['clickhouse']['server']['config']['keeper']['tcp_port'] = 2181
+# Path to coordination logs, just like ZooKeeper it is best to store logs on non-busy nodes
+default['clickhouse']['server']['config']['keeper']['log_storage_path'] = '/var/lib/clickhouse/coordination/log'
+# Path to coordination snapshots
+default['clickhouse']['server']['config']['keeper']['snapshot_storage_path'] = '/var/lib/clickhouse/coordination/snapshots'
+# White list of 4lw commands (default: conf,cons,crst,envi,ruok,srst,srvr,stat,wchc,wchs,dirs,mntr,isro)
+default['clickhouse']['server']['config']['keeper']['four_letter_word_white_list'] = '*'
+# Raft communication port for Keeper nodes
+default['clickhouse']['server']['config']['keeper']['raft_configuration']['port'] = 9444
+# Timeout for a single client operation (ms)
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['operation_timeout_ms'] = 10_000
+# Min timeout for client session (ms)
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['min_session_timeout_ms'] = 10_000
+# Max timeout for client session (ms)
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['session_timeout_ms'] = 100_000
+# How often ClickHouse Keeper checks for dead sessions and removes them (ms)
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['dead_session_check_period_ms'] = 500
+# How often a ClickHouse Keeper leader will send heartbeats to followers (ms)
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['heart_beat_interval_ms'] = 500
+# If the follower does not receive a heartbeat from the leader in this interval, then it can initiate leader election
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['election_timeout_lower_bound_ms'] = 1000
+# If the follower does not receive a heartbeat from the leader in this interval, then it must initiate leader election
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['election_timeout_upper_bound_ms'] = 2000
+# How many log records to store in a single file
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['rotate_log_storage_interval'] = 100_000
+# How many coordination log records to store before compaction
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['reserved_log_items'] = 100_000
+# How often ClickHouse Keeper will create new snapshots (in the number of records in logs)
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['snapshot_distance'] = 100_000
+# How many snapshots to keep
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['snapshots_to_keep'] = 3
+# Threshold when leader considers follower as stale and sends the snapshot to it instead of logs
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['stale_log_gap'] = 10_000
+# When node became fresh
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['fresh_log_gap'] = 200
+# Max size of batch in requests count before it will be sent to RAFT
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['max_requests_batch_size'] = 100
+# Call fsync on each write to coordination log
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['force_sync'] = true
+# Execute read requests as writes through whole RAFT consensus with similar speed
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['quorum_reads'] = false
+# Text logging level about coordination (trace, debug, and so on)
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['raft_logs_level'] = 'debug'
+# Allow to forward write requests from followers to the leader
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['auto_forwarding'] = true
+# Wait to finish internal connections and shutdown (ms)
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['shutdown_timeout'] = 5000
+# If the server doesn't connect to other quorum participants in the specified timeout it will terminate (ms)
+default['clickhouse']['server']['config']['keeper']['coordination_settings']['startup_timeout'] = 30000

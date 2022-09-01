@@ -24,6 +24,7 @@ settings_to_test = %w(
 ) + [
   '<remote_servers incl="remote_servers" optional="true">',
   '<zookeeper incl="zookeeper-servers" optional="false" />',
+  '<keeper_server incl="keeper" optional="true" />',
   '<macros incl="macros" optional="true" />',
   '<compression incl="clickhouse_compression" optional="true">',
 ]
