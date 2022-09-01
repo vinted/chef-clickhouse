@@ -42,7 +42,7 @@ class Chef
 
       # Service
       attribute(:service_name, kind_of: String, default: 'clickhouse-server')
-      attribute(:service_unit_after, kind_of: Array, default: %w[network.target])
+      attribute(:service_unit_after, kind_of: Array, default: %w(network.target))
       attribute(:service_timeout_sec, kind_of: Integer, default: 5)
       attribute(:service_restart, kind_of: String, default: 'on-failure')
       attribute(
@@ -73,7 +73,7 @@ class Chef
 
       def action_delete
         service new_resource.service_name do
-          action %i[stop disable]
+          action %i(stop disable)
         end
         file config_file_path do
           action :delete
@@ -105,7 +105,7 @@ class Chef
             status: true,
             restart: true
           )
-          action %i[enable start]
+          action %i(enable start)
         end
       end
 
@@ -156,15 +156,15 @@ class Chef
           data_path: data_path.end_with?('/') ? data_path : "#{data_path}/",
           temp_data_path: temp_data_path.end_with?('/') ? temp_data_path : "#{temp_data_path}/",
           format_schema_path: format_schema_path.end_with?('/') ? format_schema_path : "#{format_schema_path}/",
-          user_files_path: user_files_path.end_with?('/') ? user_files_path : "#{user_files_path}/"
+          user_files_path: user_files_path.end_with?('/') ? user_files_path : "#{user_files_path}/",
         }
       end
 
       def service_args
-        @service_args ||= %W[
+        @service_args ||= %W(
           --pid-file=#{pid_file_path}
           --config-file=#{config_file_path}
-        ].join(' ')
+        ).join(' ')
       end
 
       def install_users
@@ -238,17 +238,17 @@ class Chef
 
       def install_clickhouse_server_package
         package 'clickhouse-server' do
-          flush_cache %i[before] if rhel_family?
+          flush_cache %i(before) if rhel_family?
           version new_resource.version
         end
 
-        %w[
+        %w(
           /etc/cron.d/clickhouse-server
           /etc/init.d/clickhouse-server
           /etc/security/limits.d/clickhouse.conf
           /etc/clickhouse-server/users.xml
           /etc/clickhouse-server/config.xml
-        ].each do |f|
+        ).each do |f|
           file f do
             action :delete
           end

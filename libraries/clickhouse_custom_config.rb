@@ -10,7 +10,7 @@ class Chef
       attribute(:service_name, kind_of: String, default: 'clickhouse-server')
       attribute(:config_name, kind_of: String, default: 'custom.xml')
       # Whatever format
-      attribute(:config)
+      attribute(:config, kind_of: [String, Hash, Chef::Node::ImmutableMash])
 
       attribute(:template_cookbook, kind_of: String, default: 'clickhouse')
       attribute(:template_source, kind_of: String, default: 'custom.xml.erb')
@@ -46,7 +46,7 @@ class Chef
 
       def variables
         {
-          config: new_resource.config
+          config: new_resource.config,
         }
       end
 

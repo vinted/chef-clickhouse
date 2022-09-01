@@ -43,3 +43,10 @@ suites:
       - recipe[test-clickhouse::test_custom_config]
       - recipe[test-clickhouse::test_compression_config]
       - role[throughout_config_xml]
+
+  - name: keeper
+    run_list:
+      - recipe[test-clickhouse::test_clickhouse_server]
+      - recipe[test-clickhouse::test_zookeeper_config]
+      - recipe[test-clickhouse::test_keeper_config]
+      - role[throughout_config_xml]

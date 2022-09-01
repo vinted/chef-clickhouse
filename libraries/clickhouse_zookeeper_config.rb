@@ -9,9 +9,9 @@ class Chef
       # Must be array of hashes, e.g.:
       # [{index: 1, 'host' => 'localhost', 'port' => 2181}]
       # index: key is optional
-      attribute(:nodes, kind_of: Array, default: lazy {
+      attribute(:nodes, kind_of: Array, default: lazy do
         raise "`nodes` attribute can't be empty"
-      })
+      end)
       attribute(:config_name, kind_of: String, default: 'zookeeper')
 
       def template_cookbook
@@ -50,7 +50,7 @@ class Chef
 
       def variables
         {
-          nodes: new_resource.nodes
+          nodes: new_resource.nodes,
         }
       end
 

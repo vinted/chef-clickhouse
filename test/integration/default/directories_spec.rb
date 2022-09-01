@@ -1,4 +1,4 @@
-%w[
+%w(
   /etc/clickhouse-server
   /etc/clickhouse-server/clickhouse-server-test
   /etc/clickhouse-server/clickhouse-server-test/conf.d
@@ -7,7 +7,7 @@
   /var/lib/clickhouse-server-test/user_files
   /var/lib/clickhouse-server-test/tmp
   /var/lib/clickhouse-server-test/format_schemas
-].each do |directory|
+).each do |directory|
   describe file(directory) do
     it { should exist }
     it { should be_directory }

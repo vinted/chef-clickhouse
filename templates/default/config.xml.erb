@@ -191,6 +191,11 @@
       -->
     <zookeeper incl="<%= @config['zookeeper']['incl'] %>" optional="<%= @config['zookeeper']['optional'] %>" />
 
+    <!-- ClickHouse Keeper provides the coordination system for data replication and distributed DDL queries execution
+        Optional. If you use external Clickhouse Keeper or Zookeeper
+      -->
+    <keeper_server incl="<%= @config['keeper']['incl'] %>" optional="<%= @config['keeper']['optional'] %>" />
+
     <!-- Substitutions for parameters of replicated tables.
           Optional. If you don't use replicated tables, you could omit that.
 

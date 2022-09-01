@@ -1,0 +1,44 @@
+<yandex>
+    <keeper_server>
+        <server_id><%= @server_id %></server_id>
+        <tcp_port><%= @config['tcp_port'] %></tcp_port>
+        <log_storage_path><%= @config['log_storage_path'] %></log_storage_path>
+        <snapshot_storage_path><%= @config['snapshot_storage_path'] %></snapshot_storage_path>
+        <four_letter_word_white_list><%= @config['four_letter_word_white_list'] %></four_letter_word_white_list>
+
+        <coordination_settings>
+            <operation_timeout_ms><%= @config['coordination_settings']['operation_timeout_ms'] %></operation_timeout_ms>
+            <min_session_timeout_ms><%= @config['coordination_settings']['min_session_timeout_ms'] %></min_session_timeout_ms>
+            <session_timeout_ms><%= @config['coordination_settings']['session_timeout_ms'] %></session_timeout_ms>
+            <dead_session_check_period_ms><%= @config['coordination_settings']['dead_session_check_period_ms'] %></dead_session_check_period_ms>
+            <heart_beat_interval_ms><%= @config['coordination_settings']['heart_beat_interval_ms'] %></heart_beat_interval_ms>
+            <election_timeout_lower_bound_ms><%= @config['coordination_settings']['election_timeout_lower_bound_ms'] %></election_timeout_lower_bound_ms>
+            <election_timeout_upper_bound_ms><%= @config['coordination_settings']['election_timeout_upper_bound_ms'] %></election_timeout_upper_bound_ms>
+            <rotate_log_storage_interval><%= @config['coordination_settings']['rotate_log_storage_interval'] %></rotate_log_storage_interval>
+            <reserved_log_items><%= @config['coordination_settings']['reserved_log_items'] %></reserved_log_items>
+            <snapshot_distance><%= @config['coordination_settings']['snapshot_distance'] %></snapshot_distance>
+            <snapshots_to_keep><%= @config['coordination_settings']['snapshots_to_keep'] %></snapshots_to_keep>
+            <stale_log_gap><%= @config['coordination_settings']['stale_log_gap'] %></stale_log_gap>
+            <fresh_log_gap><%= @config['coordination_settings']['fresh_log_gap'] %></fresh_log_gap>
+            <max_requests_batch_size><%= @config['coordination_settings']['max_requests_batch_size'] %></max_requests_batch_size>
+            <force_sync><%= @config['coordination_settings']['force_sync'] %></force_sync>
+            <quorum_reads><%= @config['coordination_settings']['quorum_reads'] %></quorum_reads>
+            <raft_logs_level><%= @config['coordination_settings']['raft_logs_level'] %></raft_logs_level>
+            <auto_forwarding><%= @config['coordination_settings']['auto_forwarding'] %></auto_forwarding>
+            <shutdown_timeout><%= @config['coordination_settings']['shutdown_timeout'] %></shutdown_timeout>
+            <startup_timeout><%= @config['coordination_settings']['startup_timeout'] %></startup_timeout>
+        </coordination_settings>
+
+        <raft_configuration>
+            <% @nodes.each do |no| -%>
+            <server>
+                <id><%= no['server_id'] %></id>
+                <hostname><%= no['host'] %></hostname>
+                <port><%= @config['raft_configuration']['port'] %></port>
+            </server>
+            <%- end %>
+        </raft_configuration>
+      </keeper_server>
+</yandex>
+
+

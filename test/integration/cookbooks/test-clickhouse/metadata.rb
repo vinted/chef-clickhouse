@@ -1,11 +1,10 @@
 name 'test-clickhouse'
-maintainer 'The Authors'
-maintainer_email 'you@example.com'
-license 'All Rights Reserved'
+maintainer 'Vinted'
+maintainer_email 'sre@vinted.com'
+license 'MIT'
 description 'Installs/Configures test-clickhouse'
-long_description 'Installs/Configures test-clickhouse'
 version '0.2.0'
-chef_version '>= 12.1' if respond_to?(:chef_version)
+chef_version '>= 12.1'
 
 depends 'clickhouse'
 depends 'java', '~> 11.1.0'
