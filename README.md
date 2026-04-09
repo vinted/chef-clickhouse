@@ -17,7 +17,7 @@ Installs and manages ClickHouse server instances.
 default['clickhouse']['user'] = 'clickhouse'
 default['clickhouse']['group'] = 'clickhouse'
 
-default['clickhouse']['server']['version'] = '22.3.8.40.altinitystable'
+default['clickhouse']['server']['version'] = '25.8.16.10002.altinitystable'
 
 # Override config.xml Chef template resource `cookbook` location.
 # Useful in wrapping cookbooks.
@@ -133,7 +133,7 @@ Please note that when using `notifies` or `subscribes`, the resource to referenc
 - `group` - operating system group to run ClickHouse
 - `config_dir` - configuration namespace directory, default is /etc/clickhouse-server/{custom instance}
 - `version` - specifies ClickHouse package version
-- `package_release` - package release, usually relevant for RHEL, e.g.: el6, el7
+- `package_release` - package release, usually relevant for RHEL, e.g.: el8, el9
 - `bin_dir` - where to look for ClickHouse server binary
 - `generic_bin` - ClickHouse generic bin, default is `clickhouse` used for config.xml template validation
 - `server_bin` - ClickHouse server binary name, default is `clickhouse-server`

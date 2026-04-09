@@ -1,7 +1,7 @@
 default['clickhouse']['user'] = 'clickhouse'
 default['clickhouse']['group'] = 'clickhouse'
 
-default['clickhouse']['server']['version'] = '22.3.10.24.altinitystable'
+default['clickhouse']['server']['version'] = '25.8.16.10002.altinitystable'
 
 # Override config.xml Chef template resource `cookbook` location.
 # Useful in wrapping cookbooks.

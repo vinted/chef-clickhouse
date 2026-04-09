@@ -5,7 +5,7 @@ license 'MIT'
 description 'Installs/Configures chef-clickhouse'
 issues_url 'https://github.com/vinted/chef-clickhouse/issues'
 source_url 'https://github.com/vinted/chef-clickhouse'
-version '1.1.0'
+version '1.2.0'
 chef_version '>= 12.5'
 
 supports 'redhat'
